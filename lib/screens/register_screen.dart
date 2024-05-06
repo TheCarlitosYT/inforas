@@ -24,11 +24,6 @@ class RegisterScreen extends StatelessWidget {
                 ],
               )),
               SizedBox(height: 20),
-              Text(
-                'OR',
-                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-              ),
-              SizedBox(height: 15),
               // _GoogleButton(),
               SizedBox(height: 15),
               _Slider_Screen(),

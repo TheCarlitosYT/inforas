@@ -23,15 +23,8 @@ class LogInScreen extends StatelessWidget {
               ],
             )),
             SizedBox(height: 20),
-            Text(
-              'OR',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
-            ),
-            SizedBox(height: 15),
             // _GoogleButton(),
-            SizedBox(height: 25),
+            SizedBox(height: 15),
             _Slider_Screen(),
           ],
         ),
