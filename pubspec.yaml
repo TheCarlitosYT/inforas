@@ -1,5 +1,5 @@
 name: inforas
-description: "A new Flutter project."
+description: "Aplicacion InfoRas (Info Rasopatias) En flutter"
 publish_to: 'none'
 version: 0.1.0
 
@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  form_field_validator: ^1.1.0
+  provider: ^6.1.2
 
 dev_dependencies:
   flutter_test:
@@ -17,3 +19,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/
