@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:inforas/routes/routes.dart';
 
@@ -9,7 +11,6 @@ class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
   @override
- @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'InfoRAS',
@@ -19,4 +20,3 @@ class MainApp extends StatelessWidget {
     );
   }
 }
-  

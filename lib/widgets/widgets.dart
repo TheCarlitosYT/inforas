@@ -1,4 +1,4 @@
-export 'package:inforas/widgets/productcard.dart';
+export 'package:inforas/widgets/documentCard.dart';
 export 'package:inforas/widgets/CardContainer.dart';
 export 'package:inforas/widgets/authbackground.dart';
 export 'package:inforas/widgets/login_background.dart';
