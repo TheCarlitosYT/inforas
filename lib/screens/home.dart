@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:inforas/widgets/custom_bottombar.dart';
 import 'package:inforas/widgets/widgets.dart';
 // import 'package:login_app/models/products.dart';
 // import 'package:login_app/services/auth_service.dart';

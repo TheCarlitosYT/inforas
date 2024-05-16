@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:get/get.dart';
+import 'package:inforas/navigation_menu.dart';
 import 'package:inforas/widgets/widgets.dart';
 import 'package:inforas/ui/input_decorations.dart';
 
@@ -138,8 +140,9 @@ class _LogInFormState extends State<LogInForm> {
 
   MaterialButton _SignInButton() {
     return MaterialButton(
-      onPressed: () {
-      Navigator.pushReplacementNamed(context, '/home');
+      onPressed: () => {
+        Get.to(() => const NavigationMenu())
+      // Navigator.pushReplacementNamed(context, '/home');
       },
       // onPressed: () {
       //   if (_formKey.currentState!.validate()) {
