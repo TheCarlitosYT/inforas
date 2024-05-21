@@ -15,39 +15,52 @@ class _CalendarPageState extends State<CalendarPage> {
       today = day;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+              onPressed: (() {
+                // authService.logout();
+
+                print('cerraste sesión');
+                Navigator.pushReplacementNamed(context, '/login');
+              }),
+              icon: Icon(
+                Icons.logout_outlined,
+                color: Color.fromARGB(255, 255, 255, 255),
+              ))
+        ],
         title: Text('Calendar'),
+        centerTitle: true,
         backgroundColor: Colors.purple,
+        titleTextStyle: TextStyle(color: Colors.white),
       ),
       body: calendar(),
     );
   }
 
-
-
   Widget calendar() {
-    return Column (
-    children: [ 
+    return Column(children: [
       Text("Dia seleccionado " + today.toString().split(" ")[0]),
       Container(
-      child: TableCalendar(
-        // locale: "en_US",
-        // rowHeight: 50,
-        headerStyle: HeaderStyle(
-          formatButtonVisible: false,
-          titleCentered: true,
+        child: TableCalendar(
+          // locale: "en_US",
+          // rowHeight: 50,
+          headerStyle: HeaderStyle(
+            formatButtonVisible: false,
+            titleCentered: true,
+          ),
+          selectedDayPredicate: (day) => isSameDay(day, today),
+          firstDay: DateTime.utc(2010, 10, 16),
+          lastDay: DateTime.utc(2030, 3, 14),
+          focusedDay: today,
+          onDaySelected: _onDaySelected,
         ),
-        selectedDayPredicate: (day) => isSameDay(day, today),
-        firstDay: DateTime.utc(2010, 10, 16),
-        lastDay: DateTime.utc(2030, 3, 14),
-        focusedDay: today,
-        onDaySelected: _onDaySelected,
-      ),
-    )
-    ]
-    );
+      )
+    ]);
   }
 }

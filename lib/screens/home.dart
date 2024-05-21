@@ -20,6 +20,10 @@ class homeScreen extends StatelessWidget {
     // if (productsService.isLoading) return LoadingScreen();
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.purple,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        titleTextStyle: TextStyle(color: Colors.white),
         title: Text('Productos'),
         actions: [
         IconButton(
@@ -29,7 +33,7 @@ class homeScreen extends StatelessWidget {
             print('cerraste sesión');
             Navigator.pushReplacementNamed(context, '/login');
           }), 
-          icon: Icon(Icons.logout_outlined, color: const Color.fromARGB(255, 0, 0, 0),)
+          icon: Icon(Icons.logout_outlined, color: Color.fromARGB(255, 255, 255, 255),)
         )
         ],
       ),

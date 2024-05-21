@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 
-class formScreen extends StatelessWidget  {
+class DocumentFormScreen extends StatelessWidget  {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
