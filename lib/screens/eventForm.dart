@@ -18,14 +18,14 @@ class EventFormScreen extends StatelessWidget  {
             },
           ),
         ),
-        body: MyForm(),
+        body: EventosForm(),
         // bottomNavigationBar: CustomNavigationBottomBar(),
       ),
     );
   }
 }
 
-class MyForm extends StatelessWidget {
+class EventosForm extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override

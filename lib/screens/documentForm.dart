@@ -17,14 +17,14 @@ class DocumentFormScreen extends StatelessWidget  {
             },
           ),
         ),
-        body: MyForm(),
+        body: DocumentosForm(),
         // bottomNavigationBar: CustomNavigationBottomBar(),
       ),
     );
   }
 }
 
-class MyForm extends StatelessWidget {
+class DocumentosForm extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override

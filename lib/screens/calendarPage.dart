@@ -39,6 +39,17 @@ class _CalendarPageState extends State<CalendarPage> {
         backgroundColor: Colors.purple,
         titleTextStyle: TextStyle(color: Colors.white),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          // productsService.selectedProduct = new Product(
+          //   available: false, 
+          //   name: '', 
+          //   price: 0
+          //   );
+          Navigator.pushNamed(context, '/eventform');
+        },
+      ),
       body: calendar(),
     );
   }

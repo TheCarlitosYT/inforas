@@ -8,5 +8,6 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
     '/home': (_) => homeScreen(),
     '/form': (_) => DocumentFormScreen(),
     '/calendar': (_) => CalendarPage(),
+    '/eventform': (_) => EventFormScreen(),
   };
 }
