@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inforas/screens/screens.dart';
+import 'package:inforas/screens/userScreen.dart';
 
 
 class NavigationMenu extends StatelessWidget {
@@ -24,7 +25,7 @@ class NavigationMenu extends StatelessWidget {
           destinations: [
             NavigationDestination(icon: Icon(Icons.edit_document), label: 'Documentos'),
             NavigationDestination(icon: Icon(Icons.calendar_today), label: 'Eventos'),
-            // NavigationDestination(icon: Icon(Icons.person), label: 'Perfil'),
+            NavigationDestination(icon: Icon(Icons.person), label: 'Perfil'),
           ],
         ),
         ),
@@ -39,5 +40,6 @@ class NavigationMenu extends StatelessWidget {
     final screens = [
       const homeScreen(),
       const CalendarPage(),
+      const UserScreen()
       ];
   }
