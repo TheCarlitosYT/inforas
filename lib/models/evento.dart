@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class Asociacion {
+class Evento {
     int idEventos;
     String titulo;
     String tipoEvento;
@@ -9,7 +9,7 @@ class Asociacion {
     DateTime fecha;
     String lugar;
 
-    Asociacion({
+    Evento({
         required this.idEventos,
         required this.titulo,
         required this.tipoEvento,
@@ -19,11 +19,11 @@ class Asociacion {
         required this.lugar,
     });
 
-    factory Asociacion.fromRawJson(String str) => Asociacion.fromJson(json.decode(str));
+    factory Evento.fromRawJson(String str) => Evento.fromJson(json.decode(str));
 
     String toRawJson() => json.encode(toJson());
 
-    factory Asociacion.fromJson(Map<String, dynamic> json) => Asociacion(
+    factory Evento.fromJson(Map<String, dynamic> json) => Evento(
         idEventos: json["id_eventos"],
         titulo: json["titulo"],
         tipoEvento: json["tipoEvento"],
