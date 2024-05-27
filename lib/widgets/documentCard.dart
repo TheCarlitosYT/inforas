@@ -1,13 +1,14 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, camel_case_types
 
 import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';  
+// import 'package:provider/provider.dart';
 //import 'package:inforas/services/services.dart';
 
 class documentCard extends StatelessWidget {
   // const documentCard({super.key, required this.product});
   // final Product product;
-  const documentCard({required this.testName, this.desc, required this.additionalInfo});
+  const documentCard(
+      {required this.testName, this.desc, required this.additionalInfo});
   final String testName;
   final String? desc;
   final String additionalInfo;
@@ -18,53 +19,92 @@ class documentCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Container(
         width: double.infinity,
-        height: 200,
+        height: 210,
         margin: EdgeInsets.only(top: 30, bottom: 50),
         decoration: _cardBorders(),
-        child: Stack(
-          alignment: Alignment.bottomLeft,
-          children: [
-            // _BackgroundImage(product.picture),
-            _docDetails(additionalInfo),
+        child: Stack(alignment: Alignment.bottomLeft, children: [
+          // _BackgroundImage(product.picture),
+          _docDetails(additionalInfo),
 
-            Positioned(
-              top: 0,
-              right: 0,
-              child: IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () {
-                  // Mostrar un cuadro de diálogo de confirmación
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('Eliminar Producto'),
-                        content: Text('¿Estás seguro de que quieres eliminar este producto?'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
-                            },
-                            child: Text('Cancelar'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              // Eliminar el producto
-                              // Provider.of<ProductsService>(context, listen: false)
-                              //     .deleteProduct(product);
-                              Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
-                            },
-                            child: Text('Eliminar'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-              ),
+          Positioned(
+            top: 0,
+            right: 0,
+            child: IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                // Mostrar un cuadro de diálogo de confirmación
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Eliminar Documento'),
+                      content: Text(
+                          '¿Estás seguro de que quieres eliminar este documento?'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pop(); // Cerrar el cuadro de diálogo
+                          },
+                          child: Text('Cancelar'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            // Eliminar el producto
+                            // Provider.of<ProductsService>(context, listen: false)
+                            //     .deleteProduct(product);
+                            Navigator.of(context)
+                                .pop(); // Cerrar el cuadro de diálogo
+                          },
+                          child: Text('Eliminar'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
             ),
-          ],
-        ),
+          ),
+          Stack(
+            alignment: Alignment.topLeft,
+            children: [
+              Positioned(
+                top: 10, // Ajusta la posición vertical según sea necesario
+                left: 20, // Ajusta la posición horizontal según sea necesario
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      testName.length > 20
+                              ? '${testName.substring(0, 20)}...'
+                              : testName,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    if (desc != null)
+                      
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top:
+                                8.0), // Ajusta el espaciado superior según sea necesario
+                        child: SizedBox(
+                width: MediaQuery.of(context).size.width - 70, // Ancho máximo
+                        child: Text(
+                          desc!.length > 130
+                              ? '${desc!.substring(0, 130)}...'
+                              : desc!,
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ]),
       ),
     );
   }
@@ -124,7 +164,7 @@ class documentCard extends StatelessWidget {
 //                 child: _docDetails(additionalInfo),
 //                 bottom: 0,
 //               )
-            
+
 //           ],
 //         ),
 //       ),
@@ -144,8 +184,7 @@ class documentCard extends StatelessWidget {
 // class _BackgroundImage extends StatelessWidget {
 //   final String? url;
 //   const _BackgroundImage(this.url);
-  
-  
+
 //   @override
 //   Widget build(BuildContext context) {
 //     return Container(
@@ -153,10 +192,10 @@ class documentCard extends StatelessWidget {
 //       height: 400,
 //       child: ClipRRect(
 //         borderRadius: BorderRadius.circular(25),
-//         child: Text("test")/* url == null 
+//         child: Text("test")/* url == null
 //         ? Image(image: AssetImage('assets/no-image.png'),Text(('text'),
 //         //fit: BoxFit.cover,
-//         ) 
+//         )
 //        : FadeInImage(
 //           placeholder: AssetImage('assets/jar-loading.gif'),
 //           image: NetworkImage('https://via.placeholder.com/400x300/f6f6f6' /*url!*/),
@@ -170,7 +209,6 @@ class documentCard extends StatelessWidget {
 // class _docDetails extends StatelessWidget {
 //   const _docDetails(this.additionalInfo);
 //   final String additionalInfo;
-  
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -178,7 +216,7 @@ class documentCard extends StatelessWidget {
 //       padding: EdgeInsets.only(right: 50),
 //       child: Container(
 //         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        
+
 //         decoration: _buildBoxDecoration(),
 //         height: 60,
 //         width: double.infinity,
@@ -230,16 +268,17 @@ class _docDetails extends StatelessWidget {
             "Tipo de evento",
             style: TextStyle(
               fontSize: 20,
-              color: Colors.black,
+              color: const Color.fromARGB(255, 255, 255, 255),
               fontWeight: FontWeight.bold,
             ),
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
           ),
-          SizedBox(height: 5), // Espacio entre el título y la información adicional
+          SizedBox(
+              height: 5), // Espacio entre el título y la información adicional
           Text(
             additionalInfo,
-            style: TextStyle(fontSize: 17, color: Colors.black),
+            style: TextStyle(fontSize: 17, color: const Color.fromARGB(255, 255, 255, 255)),
           ),
         ],
       ),
@@ -248,7 +287,7 @@ class _docDetails extends StatelessWidget {
 
   BoxDecoration _buildBoxDecoration() {
     return BoxDecoration(
-      color: Color.fromARGB(255, 255, 255, 0),
+      color: Colors.purple,
       borderRadius: BorderRadius.only(
         bottomLeft: Radius.circular(25),
         bottomRight: Radius.circular(25),

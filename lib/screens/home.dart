@@ -41,7 +41,7 @@ class homeScreen extends StatelessWidget {
         itemCount: /*productsService.products.length*/ 10,
         itemBuilder: (context, index) {
           return GestureDetector(
-            child: /*Text('Item: $index')*/ documentCard(/*product: productsService.products[index]*/ testName: "Titulo", desc: "Descripcion super larga y con numero ultralargo ${index + 1}", additionalInfo: "Hola"),
+            child: /*Text('Item: $index')*/ documentCard(/*product: productsService.products[index]*/ testName: "Titulo hiper mega largo que supera los carácteres permitidos", desc: "Descripcion super larga y con numero ultralargo con muchas palabras y letras con un numero ultrahipermega largo, tan largo que hasta un lorem no es comparable, no es rival, vaya numerin, 33? que va, mejor esta biblia, a ver que sacamos. Numero: ${index + 1}", additionalInfo: "Hola"),
             onTap: () {
               // productsService.selectedProduct = productsService.products[index].copy();
               // Navigator.pushNamed(context, 'product');
