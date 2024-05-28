@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last, camel_case_types, prefer_adjacent_string_concatenation, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -69,8 +69,7 @@ class _LogInFormState extends State<LogInForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Form(
+    return Form(
         key: _formKey,
         autovalidateMode: AutovalidateMode.disabled,
         child: Column(
@@ -134,8 +133,7 @@ class _LogInFormState extends State<LogInForm> {
             SizedBox(height: 20),
           ],
         ),
-      ),
-    );
+      );
   }
 
   MaterialButton _SignInButton() {

@@ -47,7 +47,7 @@ class _CalendarPageState extends State<CalendarPage> {
           //   name: '', 
           //   price: 0
           //   );
-          Navigator.pushNamed(context, '/eventform');
+          Navigator.pushNamed(context, '/eventoformtest');
         },
       ),
       body: calendar(),
