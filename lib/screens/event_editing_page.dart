@@ -23,6 +23,8 @@ class EventEditingPage extends StatefulWidget {
 class _EventEditingPageState extends State<EventEditingPage> {
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
+  final lugarController = TextEditingController();
+  final enlaceController = TextEditingController();
   late DateTime fechaHoraEvento;
 
   @override
@@ -56,6 +58,9 @@ class _EventEditingPageState extends State<EventEditingPage> {
                 SizedBox(height: 12),
                 buildDatePickers(),
                 SizedBox(height: 12),
+                buildLugar(),
+                SizedBox(height: 12),
+                buildEnlace(),
               ],
             ),
           ),
@@ -72,6 +77,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
             onPressed: () => Navigator.pop(context))
       ];
 
+  //Controladores de texto
   Widget buildTitle() => TextFormField(
         style: TextStyle(fontSize: 21),
         decoration: InputDecoration(
@@ -85,6 +91,35 @@ class _EventEditingPageState extends State<EventEditingPage> {
         controller: titleController,
       );
 
+
+    Widget buildLugar() => TextFormField(
+        style: TextStyle(fontSize: 15),
+        decoration: InputDecoration(
+          border: UnderlineInputBorder(),
+          hintText: 'Indique el lugar del evento',
+          hintStyle: TextStyle(fontSize: 15),
+        ),
+        onFieldSubmitted: (_) {},
+        validator: (value) =>
+            value!.isEmpty ? value = "Sin lugar" : null,
+        controller: lugarController,
+      );
+
+
+    Widget buildEnlace() => TextFormField(
+        style: TextStyle(fontSize: 15),
+        decoration: InputDecoration(
+          border: UnderlineInputBorder(),
+          hintText: 'Indique el enlace del evento',
+          hintStyle: TextStyle(fontSize: 15),
+        ),
+        onFieldSubmitted: (_) {},
+        validator: (value) =>
+            value!.isEmpty ? value = "Sin enlace" : null,
+        controller: enlaceController,
+      );
+
+
   Widget buildDatePickers() => Column(
         children: [
           buildFrom(),
@@ -96,7 +131,6 @@ class _EventEditingPageState extends State<EventEditingPage> {
       //Este ejemplo de abajo sería el from y el to sería duplicarlo y añadirle otro campo fechayhora)
       header: 'Elija una fecha',
       child: Row(children: [
-// Suggested code may be subject to a license. Learn more: LicenseLog:69420
         Expanded(
           flex: 2,
           child: buildDropdownField(
@@ -185,4 +219,23 @@ class _EventEditingPageState extends State<EventEditingPage> {
           child,
         ],
       );
+
+
+//Publicación, aquí se guarda el objeto que contiene:
+//Titulo, tipo de evento, descripción, enlace, fecha y lugar.
+
+      // Future saveForm() async {
+      // final isValid = _formKey.currentState!.validate();
+      // if (isValid) {
+      //   final evento = Evento(
+      //     titulo: titleController.text, 
+      //     tipoEvento: tipoEvento, 
+      //     descripcion: descripcion, 
+      //     enlace: enlaceController.text, 
+      //     fecha: fecha, 
+      //     lugar: lugarController.text
+      //     )
+      // //Pensando como hacerlo, ya que en el caso de eventos, tanto el enlace como el lugar pueden ser opcionales.
+      // }
+      // }
 }
