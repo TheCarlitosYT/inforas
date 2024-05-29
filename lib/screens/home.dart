@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:inforas/models/documento.dart';
+import 'package:inforas/providers/inforas_provider.dart';
 import 'package:inforas/widgets/widgets.dart';
 // import 'package:login_app/models/products.dart';
 // import 'package:login_app/services/auth_service.dart';
@@ -16,6 +18,7 @@ class homeScreen extends StatelessWidget {
     // final productsService = Provider.of<ProductsService>(context);
     // final authService = Provider.of<AuthService>(context, listen: false);
 
+    // final List<Documento> documentos = InforasProvider.getJsonData('/documentos/') as List<Documento>;
 
     // if (productsService.isLoading) return LoadingScreen();
     return Scaffold(
@@ -24,7 +27,7 @@ class homeScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         centerTitle: true,
         titleTextStyle: TextStyle(color: Colors.white),
-        title: Text('Productos'),
+        title: Text('Documentos'),
         actions: [
         IconButton(
           onPressed: (() {

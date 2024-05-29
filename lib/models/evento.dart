@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Evento {
-    int idEventos;
+    int? idEventos;
     String titulo;
     String tipoEvento;
     String descripcion;
@@ -10,7 +10,7 @@ class Evento {
     String lugar;
 
     Evento({
-        required this.idEventos,
+        this.idEventos,
         required this.titulo,
         required this.tipoEvento,
         required this.descripcion,

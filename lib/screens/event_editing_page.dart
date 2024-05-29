@@ -6,7 +6,9 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:inforas/models/evento.dart';
+import 'package:inforas/providers/events_provider.dart';
 import 'package:inforas/utils/utils.dart';
+import 'package:provider/provider.dart';
 
 class EventEditingPage extends StatefulWidget {
   final Evento? evento;
@@ -25,6 +27,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
   final titleController = TextEditingController();
   final lugarController = TextEditingController();
   final enlaceController = TextEditingController();
+  final tipoController = TextEditingValue();
   late DateTime fechaHoraEvento;
 
   @override
@@ -74,7 +77,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
                 shadowColor: Colors.transparent),
             icon: Icon(Icons.save),
             label: Text('Guardar'),
-            onPressed: () => Navigator.pop(context))
+            onPressed: saveForm)
       ];
 
   //Controladores de texto
@@ -91,8 +94,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
         controller: titleController,
       );
 
-
-    Widget buildLugar() => TextFormField(
+  Widget buildLugar() => TextFormField(
         style: TextStyle(fontSize: 15),
         decoration: InputDecoration(
           border: UnderlineInputBorder(),
@@ -100,13 +102,11 @@ class _EventEditingPageState extends State<EventEditingPage> {
           hintStyle: TextStyle(fontSize: 15),
         ),
         onFieldSubmitted: (_) {},
-        validator: (value) =>
-            value!.isEmpty ? value = "Sin lugar" : null,
+        validator: (value) => value!.isEmpty ? value = "Sin lugar" : null,
         controller: lugarController,
       );
 
-
-    Widget buildEnlace() => TextFormField(
+  Widget buildEnlace() => TextFormField(
         style: TextStyle(fontSize: 15),
         decoration: InputDecoration(
           border: UnderlineInputBorder(),
@@ -114,11 +114,21 @@ class _EventEditingPageState extends State<EventEditingPage> {
           hintStyle: TextStyle(fontSize: 15),
         ),
         onFieldSubmitted: (_) {},
-        validator: (value) =>
-            value!.isEmpty ? value = "Sin enlace" : null,
+        validator: (value) => value!.isEmpty ? value = "Sin enlace" : null,
         controller: enlaceController,
       );
 
+      // Widget buildTipoEvento() => DropdownButtonFormField(
+      //   style: TextStyle(fontSize: 15),
+      //   decoration: InputDecoration(
+      //     border: UnderlineInputBorder(),
+      //     hintText: 'Indique el enlace del evento',
+      //     hintStyle: TextStyle(fontSize: 15),
+      //   ),
+      //   onFieldSubmitted: (_) {},
+      //   validator: (value) => value!.isEmpty ? value = "Sin enlace" : null,
+      //   controller: tipoController,
+      // );
 
   Widget buildDatePickers() => Column(
         children: [
@@ -128,7 +138,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
 
   Widget buildFrom() => buildHeader(
       //Nota: si quisieramos hacer el formato de fecha ("de" a "hasta" ("from" & "to")
-      //Este ejemplo de abajo sería el from y el to sería duplicarlo y añadirle otro campo fechayhora)
+      //Este ejemplo de abajo sería el from y el to sería duplicarlo y añadirle otro campo dateTime)
       header: 'Elija una fecha',
       child: Row(children: [
         Expanded(
@@ -145,7 +155,6 @@ class _EventEditingPageState extends State<EventEditingPage> {
           ),
         ),
       ]));
-  
 
   Future pickfromDateTime({required bool pickDate}) async {
     final date = await pickDateTime(fechaHoraEvento, pickDate: pickDate);
@@ -191,7 +200,6 @@ class _EventEditingPageState extends State<EventEditingPage> {
       final time = Duration(hours: timeOfDay.hour, minutes: timeOfDay.minute);
 
       return date.add(time);
-      
     }
   }
 
@@ -220,22 +228,24 @@ class _EventEditingPageState extends State<EventEditingPage> {
         ],
       );
 
-
 //Publicación, aquí se guarda el objeto que contiene:
 //Titulo, tipo de evento, descripción, enlace, fecha y lugar.
 
-      // Future saveForm() async {
-      // final isValid = _formKey.currentState!.validate();
-      // if (isValid) {
-      //   final evento = Evento(
-      //     titulo: titleController.text, 
-      //     tipoEvento: tipoEvento, 
-      //     descripcion: descripcion, 
-      //     enlace: enlaceController.text, 
-      //     fecha: fecha, 
-      //     lugar: lugarController.text
-      //     )
-      // //Pensando como hacerlo, ya que en el caso de eventos, tanto el enlace como el lugar pueden ser opcionales.
-      // }
-      // }
+  Future saveForm() async {
+    final isValid = _formKey.currentState!.validate();
+    if (isValid) {
+      final evento = Evento(
+          titulo: titleController.text,
+          tipoEvento: "tipoEvento",
+          descripcion: 'descripcion',
+          enlace: enlaceController.text,
+          fecha: fechaHoraEvento,
+          lugar: lugarController.text);
+      //Pensando como hacerlo, ya que en el caso de eventos, tanto el enlace como el lugar pueden ser opcionales.
+      final provider = Provider.of<EventsProvider>(context, listen: false);
+      provider.addEvento(evento);
+
+      Navigator.pop(context);
+    }
+  }
 }

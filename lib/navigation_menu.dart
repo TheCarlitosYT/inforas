@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inforas/screens/screens.dart';
 import 'package:inforas/screens/userScreen.dart';
+import 'package:inforas/widgets/calendar_widget.dart';
 
 
 class NavigationMenu extends StatelessWidget {
@@ -39,7 +40,13 @@ class NavigationMenu extends StatelessWidget {
 
     final screens = [
       const homeScreen(),
-      const CalendarPage(),
+      const CalendarScreen(),
       const UserScreen()
-      ];
+    ];
+
+  //   List<StatelessWidget> get screens => [
+  //   const homeScreen(),
+  //   calendarWidget(),
+  //   const UserScreen(),
+  // ];
   }
