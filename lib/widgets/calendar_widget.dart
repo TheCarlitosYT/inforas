@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inforas/models/event_data_source.dart';
+import 'package:inforas/models/evento.dart';
 import 'package:inforas/providers/events_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -24,24 +25,26 @@ class calendarWidget extends StatelessWidget {
         showTrailingAndLeadingDates: false,
         dayFormat: 'EEE',
       ),
-      onTap: calendarTapped,
+    onTap: (calendarTapDetails) => calendarTapped(context, calendarTapDetails),
     );
   }
 
-  void calendarTapped(CalendarTapDetails calendarTapDetails) {
+  void calendarTapped(BuildContext context, CalendarTapDetails calendarTapDetails) {
     if (calendarTapDetails.targetElement == CalendarElement.appointment) {
-      Appointment appointment = calendarTapDetails.appointments![0];
+      Evento appointment = calendarTapDetails.appointments![0];
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => SecondRoute(appointment: appointment)),
       );
+    } else {
+      print('Hola');
     }
   }
 }
 
 class SecondRoute extends StatelessWidget {
-  Appointment? appointment;
+  Evento? appointment;
 
   SecondRoute({super.key, this.appointment});
 
@@ -58,7 +61,7 @@ class SecondRoute extends StatelessWidget {
           ),
           Center(
             child: Text(
-              appointment!.subject,
+              appointment!.titulo,
             ),
           ),
           const Divider(
@@ -67,7 +70,7 @@ class SecondRoute extends StatelessWidget {
           Center(
             child: Text(DateFormat('MMMM yyyy,hh:mm a')
                 .format(
-                  appointment!.startTime,
+                  appointment!.fecha,
                 )
                 .toString()),
           ),
@@ -77,7 +80,7 @@ class SecondRoute extends StatelessWidget {
           Center(
             child: Text(DateFormat('MMMM yyyy,hh:mm a')
                 .format(
-                  appointment!.endTime,
+                  appointment!.fecha,
                 )
                 .toString()),
           ),
