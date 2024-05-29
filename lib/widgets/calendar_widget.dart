@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
+//https://support.syncfusion.com/kb/article/10775/how-to-show-the-tapped-appointment-details-on-another-page-in-the-flutter-calendar
 class calendarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
