@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:inforas/helpers/debouncer.dart';
 
 class InforasProvider {
-  static final _baseUrl = '10.0.2.2:8082';
+  static final _baseUrl = '10.0.2.2:8089';
   static String apiKey = '';
 
   final debouncer = Debouncer(duration: Duration(milliseconds: 500));
