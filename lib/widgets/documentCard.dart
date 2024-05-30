@@ -20,7 +20,7 @@ class documentCard extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: 210,
-        margin: EdgeInsets.only(top: 30, bottom: 50),
+        margin: EdgeInsets.only(top: 30, bottom: 10),
         decoration: _cardBorders(),
         child: Stack(alignment: Alignment.bottomLeft, children: [
           // _BackgroundImage(product.picture),
@@ -88,7 +88,7 @@ class documentCard extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(
                             top:
-                                8.0), // Ajusta el espaciado superior según sea necesario
+                                5.0),
                         child: SizedBox(
                 width: MediaQuery.of(context).size.width - 70, // Ancho máximo
                         child: Text(
