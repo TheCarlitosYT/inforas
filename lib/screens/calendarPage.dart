@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-
+//Todo: EoS esta página
 class CalendarPage extends StatefulWidget {
   const CalendarPage({super.key});
 
@@ -47,7 +47,7 @@ class _CalendarPageState extends State<CalendarPage> {
           //   name: '', 
           //   price: 0
           //   );
-          Navigator.pushNamed(context, '/eventoformtest');
+          Navigator.pushNamed(context, '/eventoform');
         },
       ),
       body: calendar(),

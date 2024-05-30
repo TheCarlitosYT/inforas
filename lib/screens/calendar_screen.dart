@@ -34,7 +34,7 @@ class CalendarScreen extends StatelessWidget {
           //   name: '', 
           //   price: 0
           //   );
-          Navigator.pushNamed(context, '/eventoformtest');
+          Navigator.pushNamed(context, '/eventoform');
         },
       ),
     );

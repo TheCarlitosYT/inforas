@@ -7,8 +7,7 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
     '/register': (_) => RegisterScreen(),
     '/home': (_) => homeScreen(),
     '/form': (_) => DocumentFormScreen(),
-    '/calendar': (_) => CalendarPage(),
-    '/eventform': (_) => EventFormScreen(),
-    '/eventoformtest': (_) => EventEditingPage(),
+    '/calendar': (_) => CalendarScreen(),
+    '/eventoform': (_) => EventEditingPage(),
   };
 }

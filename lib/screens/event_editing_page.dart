@@ -34,7 +34,14 @@ class _EventEditingPageState extends State<EventEditingPage> {
   void initState() {
     super.initState();
     if (widget.evento == null) {
-      fechaHoraEvento = DateTime.now();
+      fechaHoraEvento = DateTime.now().add(Duration(hours: 2));
+    } else {
+      final event = widget.evento!;
+      titleController.text = event.titulo;
+      lugarController.text = event.lugar;
+      enlaceController.text = event.enlace;
+      // tipoController = TextEditingValue(text: event.tipoEvento);
+      fechaHoraEvento = event.fecha;
     }
   }
 
@@ -242,10 +249,19 @@ class _EventEditingPageState extends State<EventEditingPage> {
           fecha: fechaHoraEvento,
           lugar: lugarController.text);
       //Pensando como hacerlo, ya que en el caso de eventos, tanto el enlace como el lugar pueden ser opcionales.
+      final isEditing = widget.evento != null;
+      
       final provider = Provider.of<EventsProvider>(context, listen: false);
+      
+      if (isEditing) {
+      provider.editEvento(evento, widget.evento!);
+      
+      Navigator.of(context).pop();
+      } else {
       provider.addEvento(evento);
-
-      Navigator.pop(context);
+      }
+      Navigator.of(context).pop();
+      
     }
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inforas/models/event_data_source.dart';
 import 'package:inforas/models/evento.dart';
 import 'package:inforas/providers/events_provider.dart';
-import 'package:intl/intl.dart';
+import 'package:inforas/screens/event_viewing_page.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -31,11 +31,11 @@ class calendarWidget extends StatelessWidget {
 
   void calendarTapped(BuildContext context, CalendarTapDetails calendarTapDetails) {
     if (calendarTapDetails.targetElement == CalendarElement.appointment) {
-      Evento appointment = calendarTapDetails.appointments![0];
+      Evento evento = calendarTapDetails.appointments![0];
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => SecondRoute(appointment: appointment)),
+            builder: (context) => EventViewingPage(evento: evento)),
       );
     } else {
       print('Hola');
@@ -43,49 +43,4 @@ class calendarWidget extends StatelessWidget {
   }
 }
 
-class SecondRoute extends StatelessWidget {
-  Evento? appointment;
 
-  SecondRoute({super.key, this.appointment});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Second Route"),
-      ),
-      body: Column(
-        children: [
-          const Divider(
-            color: Colors.white,
-          ),
-          Center(
-            child: Text(
-              appointment!.titulo,
-            ),
-          ),
-          const Divider(
-            color: Colors.white,
-          ),
-          Center(
-            child: Text(DateFormat('MMMM yyyy,hh:mm a')
-                .format(
-                  appointment!.fecha,
-                )
-                .toString()),
-          ),
-          const Divider(
-            color: Colors.white,
-          ),
-          Center(
-            child: Text(DateFormat('MMMM yyyy,hh:mm a')
-                .format(
-                  appointment!.fecha,
-                )
-                .toString()),
-          ),
-        ],
-      ),
-    );
-  }
-}
