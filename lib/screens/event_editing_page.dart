@@ -41,7 +41,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
       final event = widget.evento!;
       titleController.text = event.titulo;
       lugarController.text = event.lugar;
-      enlaceController.text = event.enlace;
+      enlaceController.text = event.enlace ?? "";
       // tipoController = TextEditingValue(text: event.tipoEvento);
       fechaHoraEvento = event.fecha;
       descripcionController.text = event.descripcion ?? '';
@@ -59,8 +59,9 @@ class _EventEditingPageState extends State<EventEditingPage> {
         appBar: AppBar(
           leading: CloseButton(),
           iconTheme: IconThemeData(
-    color: const Color.fromARGB(255, 255, 255, 255), //change your color here
-  ),
+            color: const Color.fromARGB(
+                255, 255, 255, 255), //change your color here
+          ),
           actions: buildEditingActions(),
           backgroundColor: Colors.purple,
           title: Text(
@@ -112,20 +113,25 @@ class _EventEditingPageState extends State<EventEditingPage> {
       ];
 
   //Controladores de texto
-  Widget buildTitle() => TextFormField(
-        style: TextStyle(fontSize: 21),
+  Widget buildTitle() => buildHeader(
+      header: 'Título',
+      child: TextFormField(
+        style: TextStyle(fontSize: 18),
         decoration: InputDecoration(
           border: UnderlineInputBorder(),
           hintText: 'Indique un Título para el evento',
-          hintStyle: TextStyle(fontSize: 20),
+          hintStyle: TextStyle(fontSize: 18),
         ),
         onFieldSubmitted: (_) {},
         validator: (value) =>
             value!.isEmpty ? 'Por favor, ingrese un título' : null,
         controller: titleController,
-      );
+      ));
 
-  Widget buildLugar() => TextFormField(
+
+  Widget buildLugar() => buildHeader(
+      header: 'Lugar donde se realiza el evento',
+      child: TextFormField(
         style: TextStyle(fontSize: 15),
         decoration: InputDecoration(
           border: UnderlineInputBorder(),
@@ -135,9 +141,11 @@ class _EventEditingPageState extends State<EventEditingPage> {
         onFieldSubmitted: (_) {},
         validator: (value) => value!.isEmpty ? value = "Sin lugar" : null,
         controller: lugarController,
-      );
+  ));
 
-  Widget buildEnlace() => TextFormField(
+  Widget buildEnlace() => buildHeader(
+      header: 'Enlace del evento',
+      child: TextFormField(
         style: TextStyle(fontSize: 15),
         decoration: InputDecoration(
           border: UnderlineInputBorder(),
@@ -145,26 +153,33 @@ class _EventEditingPageState extends State<EventEditingPage> {
           hintStyle: TextStyle(fontSize: 15),
         ),
         onFieldSubmitted: (_) {},
-        validator: (value) => value!.isEmpty ? value = "Sin enlace" : null,
         controller: enlaceController,
-      );
+  ));
 
-  Widget buildDescription() => SizedBox(
-        height: 100,
+  Widget buildDescription() => buildHeader(
+      header: 'Descripción del evento',
+      child: Container(
+        margin: EdgeInsets.only(top: 15),
+        height: 150,
         width: double.infinity,
         child: TextField(
+          textAlign: TextAlign.start,
+          textAlignVertical:
+              TextAlignVertical.top, // Alinea el texto desde la parte superior
           style: TextStyle(fontSize: 15),
           decoration: InputDecoration(
-            border: UnderlineInputBorder(),
+            border: OutlineInputBorder(),
             hintText: 'Indique la descripción del evento (opcional)',
             hintStyle: TextStyle(fontSize: 15),
           ),
+          expands: true,
+          maxLength: 240,
           maxLines: null, // Permite múltiples líneas
           keyboardType: TextInputType.multiline,
           controller: descripcionController,
           onSubmitted: (_) {},
         ),
-      );
+  ));
   // Widget buildTipoEvento() => DropdownButtonFormField(
   //   style: TextStyle(fontSize: 15),
   //   decoration: InputDecoration(
@@ -186,7 +201,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
   Widget buildFrom() => buildHeader(
       //Nota: si quisieramos hacer el formato de fecha ("de" a "hasta" ("from" & "to")
       //Este ejemplo de abajo sería el from y el to sería duplicarlo y añadirle otro campo dateTime)
-      header: 'Elija una fecha',
+      header: 'Fecha de comienzo',
       child: Row(children: [
         Expanded(
           flex: 2,
@@ -267,9 +282,10 @@ class _EventEditingPageState extends State<EventEditingPage> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: 5),
           Text(
             header,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           child,
         ],
@@ -285,9 +301,9 @@ class _EventEditingPageState extends State<EventEditingPage> {
           titulo: titleController.text,
           tipoEvento: "tipoEvento",
           descripcion: descripcionController.text.isNotEmpty
-          ? descripcionController.text
-          : null,
-          enlace: enlaceController.text,
+              ? descripcionController.text
+              : null,
+          enlace: enlaceController.text.isNotEmpty ? enlaceController.text : null,
           fecha: fechaHoraEvento,
           lugar: lugarController.text);
       //Pensando como hacerlo, ya que en el caso de eventos, tanto el enlace como el lugar pueden ser opcionales.

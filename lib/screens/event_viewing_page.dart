@@ -124,7 +124,7 @@ class EventViewingPage extends StatelessWidget {
           ),
         ),
         Text(
-          evento.enlace,
+          evento.enlace != null ? evento.enlace! : "No se ha establecido ningún enlace referente a este evento",
           style: TextStyle(
             fontSize: 16,
           ),
