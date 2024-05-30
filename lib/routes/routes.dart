@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inforas/screens/document_edit_page.dart';
 import 'package:inforas/screens/screens.dart';
 
 Map<String, WidgetBuilder> getApplicationRoutes() {
@@ -6,7 +7,7 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
     '/login': (_) => LogInScreen(),
     '/register': (_) => RegisterScreen(),
     '/home': (_) => homeScreen(),
-    '/form': (_) => DocumentFormScreen(),
+    '/form': (_) => DocumentEditingPage(),
     '/calendar': (_) => CalendarScreen(),
     '/eventoform': (_) => EventEditingPage(),
   };

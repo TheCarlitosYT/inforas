@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 class Documento {
-    int idDocumento;
+    int? idDocumento;
     String tipoDocumentacion;
     String titulo;
     String? descripcion;
     String enlace;
 
     Documento({
-        required this.idDocumento,
+        this.idDocumento,
         required this.tipoDocumentacion,
         required this.titulo,
         this.descripcion,

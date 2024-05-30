@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 class Asociacion {
-    int idAsociacion;
+    int? idAsociacion;
     String nombre;
     String? descripcion;
 
     Asociacion({
-        required this.idAsociacion,
+        this.idAsociacion,
         required this.nombre,
         this.descripcion,
     });

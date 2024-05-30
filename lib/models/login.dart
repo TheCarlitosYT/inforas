@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Login {
-  int id;
+  int? id;
   String username;
   String nombre;
   String apellidos;
@@ -11,7 +11,7 @@ class Login {
   String accessToken;
 
   Login({
-    required this.id,
+    this.id,
     required this.username,
     required this.nombre,
     required this.apellidos,
