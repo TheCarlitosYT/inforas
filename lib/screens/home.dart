@@ -26,7 +26,7 @@ class homeScreen extends StatelessWidget {
         backgroundColor: Colors.purple,
         automaticallyImplyLeading: false,
         centerTitle: true,
-        titleTextStyle: TextStyle(color: Colors.white),
+        titleTextStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
         title: Text('Documentos'),
         actions: [
         IconButton(

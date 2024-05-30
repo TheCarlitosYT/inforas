@@ -4,7 +4,7 @@ class Evento {
     int? idEventos;
     String titulo;
     String tipoEvento;
-    String descripcion;
+    String? descripcion;
     String enlace;
     DateTime fecha;
     String lugar;
@@ -13,7 +13,7 @@ class Evento {
         this.idEventos,
         required this.titulo,
         required this.tipoEvento,
-        required this.descripcion,
+        this.descripcion,
         required this.enlace,
         required this.fecha,
         required this.lugar,

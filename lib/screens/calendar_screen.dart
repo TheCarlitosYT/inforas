@@ -11,8 +11,8 @@ class CalendarScreen extends StatelessWidget {
         backgroundColor: Colors.purple,
         automaticallyImplyLeading: false,
         centerTitle: true,
-        titleTextStyle: TextStyle(color: Colors.white),
-        title: Text('Documentos'),
+        titleTextStyle: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+        title: Text('Calendario de eventos'),
         actions: [
         IconButton(
           onPressed: (() {

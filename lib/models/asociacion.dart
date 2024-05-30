@@ -3,12 +3,12 @@ import 'dart:convert';
 class Asociacion {
     int idAsociacion;
     String nombre;
-    String descripcion;
+    String? descripcion;
 
     Asociacion({
         required this.idAsociacion,
         required this.nombre,
-        required this.descripcion,
+        this.descripcion,
     });
 
     factory Asociacion.fromRawJson(String str) => Asociacion.fromJson(json.decode(str));

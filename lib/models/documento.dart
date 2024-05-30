@@ -4,14 +4,14 @@ class Documento {
     int idDocumento;
     String tipoDocumentacion;
     String titulo;
-    String descripcion;
+    String? descripcion;
     String enlace;
 
     Documento({
         required this.idDocumento,
         required this.tipoDocumentacion,
         required this.titulo,
-        required this.descripcion,
+        this.descripcion,
         required this.enlace,
     });
 

@@ -28,6 +28,8 @@ class _EventEditingPageState extends State<EventEditingPage> {
   final lugarController = TextEditingController();
   final enlaceController = TextEditingController();
   final tipoController = TextEditingValue();
+  final descripcionController = TextEditingController();
+
   late DateTime fechaHoraEvento;
 
   @override
@@ -42,6 +44,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
       enlaceController.text = event.enlace;
       // tipoController = TextEditingValue(text: event.tipoEvento);
       fechaHoraEvento = event.fecha;
+      descripcionController.text = event.descripcion ?? '';
     }
   }
 
@@ -55,7 +58,19 @@ class _EventEditingPageState extends State<EventEditingPage> {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           leading: CloseButton(),
+          iconTheme: IconThemeData(
+    color: const Color.fromARGB(255, 255, 255, 255), //change your color here
+  ),
           actions: buildEditingActions(),
+          backgroundColor: Colors.purple,
+          title: Text(
+            widget.evento == null ? 'Crear un nuevo evento' : 'Editar evento',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
         ),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(12),
@@ -71,6 +86,9 @@ class _EventEditingPageState extends State<EventEditingPage> {
                 buildLugar(),
                 SizedBox(height: 12),
                 buildEnlace(),
+                SizedBox(height: 12),
+                buildDescription(),
+                SizedBox(height: 12),
               ],
             ),
           ),
@@ -82,8 +100,14 @@ class _EventEditingPageState extends State<EventEditingPage> {
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent),
-            icon: Icon(Icons.save),
-            label: Text('Guardar'),
+            icon: Icon(
+              Icons.save,
+              color: Colors.white,
+            ),
+            label: Text(
+              'Guardar',
+              style: TextStyle(color: Colors.white),
+            ),
             onPressed: saveForm)
       ];
 
@@ -125,17 +149,33 @@ class _EventEditingPageState extends State<EventEditingPage> {
         controller: enlaceController,
       );
 
-      // Widget buildTipoEvento() => DropdownButtonFormField(
-      //   style: TextStyle(fontSize: 15),
-      //   decoration: InputDecoration(
-      //     border: UnderlineInputBorder(),
-      //     hintText: 'Indique el enlace del evento',
-      //     hintStyle: TextStyle(fontSize: 15),
-      //   ),
-      //   onFieldSubmitted: (_) {},
-      //   validator: (value) => value!.isEmpty ? value = "Sin enlace" : null,
-      //   controller: tipoController,
-      // );
+  Widget buildDescription() => SizedBox(
+        height: 100,
+        width: double.infinity,
+        child: TextField(
+          style: TextStyle(fontSize: 15),
+          decoration: InputDecoration(
+            border: UnderlineInputBorder(),
+            hintText: 'Indique la descripción del evento (opcional)',
+            hintStyle: TextStyle(fontSize: 15),
+          ),
+          maxLines: null, // Permite múltiples líneas
+          keyboardType: TextInputType.multiline,
+          controller: descripcionController,
+          onSubmitted: (_) {},
+        ),
+      );
+  // Widget buildTipoEvento() => DropdownButtonFormField(
+  //   style: TextStyle(fontSize: 15),
+  //   decoration: InputDecoration(
+  //     border: UnderlineInputBorder(),
+  //     hintText: 'Indique el enlace del evento',
+  //     hintStyle: TextStyle(fontSize: 15),
+  //   ),
+  //   onFieldSubmitted: (_) {},
+  //   validator: (value) => value!.isEmpty ? value = "Sin enlace" : null,
+  //   controller: tipoController,
+  // );
 
   Widget buildDatePickers() => Column(
         children: [
@@ -244,24 +284,25 @@ class _EventEditingPageState extends State<EventEditingPage> {
       final evento = Evento(
           titulo: titleController.text,
           tipoEvento: "tipoEvento",
-          descripcion: 'descripcion',
+          descripcion: descripcionController.text.isNotEmpty
+          ? descripcionController.text
+          : null,
           enlace: enlaceController.text,
           fecha: fechaHoraEvento,
           lugar: lugarController.text);
       //Pensando como hacerlo, ya que en el caso de eventos, tanto el enlace como el lugar pueden ser opcionales.
       final isEditing = widget.evento != null;
-      
+
       final provider = Provider.of<EventsProvider>(context, listen: false);
-      
+
       if (isEditing) {
-      provider.editEvento(evento, widget.evento!);
-      
-      Navigator.of(context).pop();
+        provider.editEvento(evento, widget.evento!);
+
+        Navigator.of(context).pop();
       } else {
-      provider.addEvento(evento);
+        provider.addEvento(evento);
       }
       Navigator.of(context).pop();
-      
     }
   }
 }
