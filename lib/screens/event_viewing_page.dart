@@ -131,6 +131,20 @@ class EventViewingPage extends StatelessWidget {
         ),
         SizedBox(height: 14),
         Text(
+          'Tipo de evento',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          evento.tipoEvento,
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+        SizedBox(height: 14),
+        Text(
           'Descripción del evento',
           style: TextStyle(
             fontSize: 16,

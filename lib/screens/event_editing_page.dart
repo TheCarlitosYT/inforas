@@ -1,7 +1,7 @@
 //https://www.youtube.com/watch?v=LoDtxRkGDTw
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
-import 'dart:collection';
+// ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -27,7 +27,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
   final titleController = TextEditingController();
   final lugarController = TextEditingController();
   final enlaceController = TextEditingController();
-  final tipoController = TextEditingValue();
+  var tipoController = TextEditingValue();
   final descripcionController = TextEditingController();
 
   late DateTime fechaHoraEvento;
@@ -42,7 +42,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
       titleController.text = event.titulo;
       lugarController.text = event.lugar;
       enlaceController.text = event.enlace ?? "";
-      // tipoController = TextEditingValue(text: event.tipoEvento);
+      tipoController = TextEditingValue(text: event.tipoEvento);
       fechaHoraEvento = event.fecha;
       descripcionController.text = event.descripcion ?? '';
     }
@@ -87,6 +87,8 @@ class _EventEditingPageState extends State<EventEditingPage> {
                 buildLugar(),
                 SizedBox(height: 12),
                 buildEnlace(),
+                SizedBox(height: 12),
+                buildTipoEvento(),
                 SizedBox(height: 12),
                 buildDescription(),
                 SizedBox(height: 12),
@@ -135,7 +137,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
         style: TextStyle(fontSize: 15),
         decoration: InputDecoration(
           border: UnderlineInputBorder(),
-          hintText: 'Indique el lugar del evento',
+          hintText: 'Indique el lugar del evento.',
           hintStyle: TextStyle(fontSize: 15),
         ),
         onFieldSubmitted: (_) {},
@@ -149,7 +151,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
         style: TextStyle(fontSize: 15),
         decoration: InputDecoration(
           border: UnderlineInputBorder(),
-          hintText: 'Indique el enlace del evento',
+          hintText: 'Indique el enlace del evento. (opcional)',
           hintStyle: TextStyle(fontSize: 15),
         ),
         onFieldSubmitted: (_) {},
@@ -169,7 +171,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
           style: TextStyle(fontSize: 15),
           decoration: InputDecoration(
             border: OutlineInputBorder(),
-            hintText: 'Indique la descripción del evento (opcional)',
+            hintText: 'Indique la descripción del evento. (opcional)',
             hintStyle: TextStyle(fontSize: 15),
           ),
           expands: true,
@@ -180,17 +182,39 @@ class _EventEditingPageState extends State<EventEditingPage> {
           onSubmitted: (_) {},
         ),
   ));
-  // Widget buildTipoEvento() => DropdownButtonFormField(
-  //   style: TextStyle(fontSize: 15),
-  //   decoration: InputDecoration(
-  //     border: UnderlineInputBorder(),
-  //     hintText: 'Indique el enlace del evento',
-  //     hintStyle: TextStyle(fontSize: 15),
-  //   ),
-  //   onFieldSubmitted: (_) {},
-  //   validator: (value) => value!.isEmpty ? value = "Sin enlace" : null,
-  //   controller: tipoController,
-  // );
+  Widget buildTipoEvento() => buildHeader(
+  header: 'Tipo de evento',
+  child: DropdownButtonFormField(
+    style: TextStyle(fontSize: 15, color: Colors.black),
+    decoration: InputDecoration(
+      border: UnderlineInputBorder(),
+      hintText: 'Indique el tipo de evento',
+      hintStyle: TextStyle(fontSize: 15),
+    ),
+    items: [
+      // Placeholder
+      DropdownMenuItem(
+        child: Text('Conferencia'),
+        value: 'Conferencia',
+      ),
+      DropdownMenuItem(
+        child: Text('Taller'),
+        value: 'Taller',
+      ),
+    ],
+    onChanged: (value) {
+      setState(() {
+        if (value != null){
+        tipoController = TextEditingValue(text: value);
+        } else {
+          tipoController = TextEditingValue.empty;
+        }
+      });
+    },
+    value: tipoController.text,
+    onSaved: (_) {},
+    validator: (value) => value!.isEmpty ? value = "Sin enlace" : null,
+  ));
 
   Widget buildDatePickers() => Column(
         children: [
@@ -299,7 +323,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
     if (isValid) {
       final evento = Evento(
           titulo: titleController.text,
-          tipoEvento: "tipoEvento",
+          tipoEvento: tipoController.text,
           descripcion: descripcionController.text.isNotEmpty
               ? descripcionController.text
               : null,
