@@ -27,7 +27,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
   final titleController = TextEditingController();
   final lugarController = TextEditingController();
   final enlaceController = TextEditingController();
-  var tipoController = TextEditingValue();
+  var tipoController = TextEditingController();
   final descripcionController = TextEditingController();
 
   late DateTime fechaHoraEvento;
@@ -37,12 +37,13 @@ class _EventEditingPageState extends State<EventEditingPage> {
     super.initState();
     if (widget.evento == null) {
       fechaHoraEvento = DateTime.now().add(Duration(hours: 2));
+      tipoController.text = '';
     } else {
       final event = widget.evento!;
       titleController.text = event.titulo;
       lugarController.text = event.lugar;
       enlaceController.text = event.enlace ?? "";
-      tipoController = TextEditingValue(text: event.tipoEvento);
+      tipoController.text = event.tipoEvento;
       fechaHoraEvento = event.fecha;
       descripcionController.text = event.descripcion ?? '';
     }
@@ -205,15 +206,15 @@ class _EventEditingPageState extends State<EventEditingPage> {
     onChanged: (value) {
       setState(() {
         if (value != null){
-        tipoController = TextEditingValue(text: value);
+        tipoController.text = value;
         } else {
-          tipoController = TextEditingValue.empty;
+          tipoController.text = '' ;
         }
       });
     },
-    value: tipoController.text,
+    value: tipoController.text.isNotEmpty ? tipoController.text : null,
     onSaved: (_) {},
-    validator: (value) => value!.isEmpty ? value = "Sin enlace" : null,
+    validator: (value) => value!.isEmpty ? value = "Sin categoría" : null,
   ));
 
   Widget buildDatePickers() => Column(
