@@ -5,6 +5,7 @@ import 'package:inforas/providers/documentos_provider.dart';
 import 'package:inforas/providers/events_provider.dart';
 import 'package:inforas/routes/routes.dart';
 import 'package:inforas/services/documento_service.dart';
+import 'package:inforas/services/login_service.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -24,9 +25,10 @@ class AppState extends StatelessWidget {
         // ChangeNotifierProvider(create: (_) => FavoritoService(), lazy: false),
         // ChangeNotifierProvider(create: (_) => IncidenciaService(), lazy: false),
         // ChangeNotifierProvider(create: (_) => LoginService(), lazy: false),
-        ChangeNotifierProvider(create: (context) => DocumentoService(), lazy: false,),
-        ChangeNotifierProvider(create: (context) => EventsProvider()),
-        ChangeNotifierProvider(create: (context) => DocumentsProvider(),)
+        ChangeNotifierProvider(create: (_) => LoginService(), lazy: false,),
+        ChangeNotifierProvider(create: (context) => DocumentoService(), lazy: false),
+        ChangeNotifierProvider(create: (context) => EventsProvider(), lazy: false),
+        ChangeNotifierProvider(create: (context) => DocumentsProvider(), lazy: false)
       ],
       child: MainApp(),
     );
@@ -41,7 +43,7 @@ class MainApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'InfoRAS',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/login',
+      initialRoute: '/checkToken',
       routes: getApplicationRoutes(),
     );
   }

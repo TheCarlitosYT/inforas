@@ -92,7 +92,6 @@ class _LogInFormState extends State<LogInForm> {
               onChanged: (valor) => setState(() {
                 _email = valor;
                 _loginError = false;
-                print(valor);
               }),
               validator: emailValidator,
               autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -122,7 +121,6 @@ class _LogInFormState extends State<LogInForm> {
               onChanged: (valor) => setState(() {
                 _password = valor;
                 _loginError = false;
-                print(valor);
               }),
               validator: passwordValidator,
               autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -144,7 +142,6 @@ class _LogInFormState extends State<LogInForm> {
     return MaterialButton(
       // onPressed: () => {
       //   Get.to(() => const NavigationMenu()),
-      // Navigator.pushReplacementNamed(context, '/home'),
       // },
       onPressed: () {
         if (_formKey.currentState!.validate()) {
@@ -154,7 +151,7 @@ class _LogInFormState extends State<LogInForm> {
           };
           loginService.login(data).then((value) {
             print('El usuario existe');
-            Navigator.pushReplacementNamed(context, '/home');
+            Get.to(() => const NavigationMenu());
           }).catchError((error) {
             print('Error durante el inicio de sesión $error');
             if (error is Exception && error.toString().contains('401')) {
