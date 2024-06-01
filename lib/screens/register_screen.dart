@@ -2,7 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:inforas/services/usuario_service.dart';
 import 'package:inforas/ui/input_decorations.dart';
+import 'package:inforas/widgets/errorPopUp.dart';
+import 'package:inforas/widgets/succesPopUp.dart';
 // import 'package:inforas/widgets/errorPopUp.dart';
 import 'package:inforas/widgets/widgets.dart';
 
@@ -51,7 +54,7 @@ class _RegisterFormState extends State<RegisterForm> {
   String _password = '';
   String _passwordConfirm = '';
 
-  // final ClienteService clienteService = new ClienteService();
+  final UsuarioService usuarioService = new UsuarioService();
 
   TextEditingController _nombreController = TextEditingController();
   TextEditingController _apellidosController = TextEditingController();
@@ -111,7 +114,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 style: TextStyle(color: Colors.black),
                 controller: _nombreController,
                 decoration: InputDecorationForm.authInputDecoration(
-                    hintText: 'Example_name_hint', 
+                    hintText: 'Nombre', 
                     labelText: 'Nombre', 
                     labelTheme: Colors.black,
                     borderColor: Colors.purple,
@@ -232,40 +235,40 @@ class _RegisterFormState extends State<RegisterForm> {
 
   MaterialButton _SignUpButton() {
     return MaterialButton(
-      onPressed: () {Navigator.pushNamed(context, '/login');},
-      // onPressed: () {
-      //   if (_formKey.currentState!.validate()) {
-      //     Map<String, dynamic> data = {
-      //       'username': '$_email',
-      //       'password': '$_password',
-      //       'nombre': '$_nombre',
-      //       'apellidos': '$_apellidos',
-      //     };
-      //     print('Contraseñas hacen Match');
-      //     clienteService.registerClient(data).then((value) {
-      //       print('Usuario creado correctamente');
-      //       SuccessPopup(title: 'Account_Created_Successfully_Text') //Cuenta creada con exito
-      //           .showSuccessPopup(context);
-      //       Navigator.pushNamed(context, '/login');
-      //     }).catchError((error) {
-      //       print('Error, usuario no creado $error');
-      //       if (clienteService.clientUsername
-      //           .any((client) => client.username != _email)) {
-      //         ErrorPopup(
-      //           title: 'Account_not_Created_error', //Error al crear la cuenta
-      //           message: 'Try_again_later_error', //Try again later
-      //         ).showErrorPopup(context);
-      //       } else {
-      //         ErrorPopup(
-      //           title: 'Account_not_Created_error',
-      //           message: 'Email_already_exists_error', //Correo ya existe
-      //         ).showErrorPopup(context);
-      //       }
-      //     });
-      //   } else {
-      //     print('El formulario no es válido');
-      //   }
-      // },
+      // onPressed: () {Navigator.pushNamed(context, '/login');},
+      onPressed: () {
+        if (_formKey.currentState!.validate()) {
+          Map<String, dynamic> data = {
+            'username': '$_email',
+            'password': '$_password',
+            'nombre': '$_nombre',
+            'apellidos': '$_apellidos',
+          };
+          print('Contraseñas hacen Match');
+          usuarioService.registerClient(data).then((value) {
+            print('Usuario creado correctamente');
+            SuccessPopup(title: 'Account_Created_Successfully_Text') //Cuenta creada con exito
+                .showSuccessPopup(context);
+            Navigator.pushNamed(context, '/login');
+          }).catchError((error) {
+            print('Error, usuario no creado $error');
+            if (usuarioService.clientUsername
+                .any((client) => client.username != _email)) {
+              ErrorPopup(
+                title: 'Account_not_Created_error', //Error al crear la cuenta
+                message: 'Try_again_later_error', //Try again later
+              ).showErrorPopup(context);
+            } else {
+              ErrorPopup(
+                title: 'Account_not_Created_error',
+                message: 'Email_already_exists_error', //Correo ya existe
+              ).showErrorPopup(context);
+            }
+          });
+        } else {
+          print('El formulario no es válido');
+        }
+      },
       child: Text('Registrate', //Registrarse
           style: TextStyle(
               color: Color(0xffededed),

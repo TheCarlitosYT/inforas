@@ -16,6 +16,7 @@ class calendarWidget extends StatelessWidget {
       view: CalendarView.month,
       initialSelectedDate: DateTime.now(),
       cellBorderColor: Colors.transparent,
+      //DataSource es para implementarlo al calendar, hay que ver como hacerlo desde la DDBB
       dataSource: EventDataSource(eventos),
       firstDayOfWeek: 1,
       monthViewSettings: MonthViewSettings(

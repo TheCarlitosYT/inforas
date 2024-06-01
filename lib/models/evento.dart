@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:inforas/services/login_service.dart';
+
 class Evento {
     int? idEventos;
     String titulo;
@@ -8,6 +10,7 @@ class Evento {
     String? enlace;
     DateTime fecha;
     String lugar;
+    int idUsuario;
 
     Evento({
         this.idEventos,
@@ -17,6 +20,7 @@ class Evento {
         this.enlace,
         required this.fecha,
         required this.lugar,
+        required this.idUsuario,
     });
 
     factory Evento.fromRawJson(String str) => Evento.fromJson(json.decode(str));
@@ -31,6 +35,7 @@ class Evento {
         enlace: json["enlace"],
         fecha: DateTime.parse(json["fecha"]),
         lugar: json["lugar"],
+        idUsuario: LoginService.usuario.id,
     );
 
     Map<String, dynamic> toJson() => {
@@ -41,5 +46,6 @@ class Evento {
         "enlace": enlace,
         "fecha": fecha.toIso8601String(),
         "lugar": lugar,
+        "id_usuario": idUsuario,
     };
 }

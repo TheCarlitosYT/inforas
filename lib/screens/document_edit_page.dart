@@ -222,7 +222,8 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
           descripcion: descripcionController.text.isNotEmpty
               ? descripcionController.text
               : null,
-          enlace: enlaceController.text
+          enlace: enlaceController.text,
+          idUsuario: 1,
           );
       final isEditing = widget.documento != null;
 

@@ -330,7 +330,9 @@ class _EventEditingPageState extends State<EventEditingPage> {
               : null,
           enlace: enlaceController.text.isNotEmpty ? enlaceController.text : null,
           fecha: fechaHoraEvento,
-          lugar: lugarController.text);
+          lugar: lugarController.text,
+          idUsuario: 1,
+          );
       //Pensando como hacerlo, ya que en el caso de eventos, tanto el enlace como el lugar pueden ser opcionales.
       final isEditing = widget.evento != null;
 

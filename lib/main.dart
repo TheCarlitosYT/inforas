@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inforas/providers/documentos_provider.dart';
 import 'package:inforas/providers/events_provider.dart';
 import 'package:inforas/routes/routes.dart';
+import 'package:inforas/services/documento_service.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -22,7 +24,9 @@ class AppState extends StatelessWidget {
         // ChangeNotifierProvider(create: (_) => FavoritoService(), lazy: false),
         // ChangeNotifierProvider(create: (_) => IncidenciaService(), lazy: false),
         // ChangeNotifierProvider(create: (_) => LoginService(), lazy: false),
-        ChangeNotifierProvider(create: (context) => EventsProvider())
+        ChangeNotifierProvider(create: (context) => DocumentoService(), lazy: false,),
+        ChangeNotifierProvider(create: (context) => EventsProvider()),
+        ChangeNotifierProvider(create: (context) => DocumentsProvider(),)
       ],
       child: MainApp(),
     );

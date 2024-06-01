@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:inforas/models/documento.dart';
 import 'package:inforas/providers/inforas_provider.dart';
+import 'package:inforas/services/documento_service.dart';
 import 'package:inforas/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 // import 'package:login_app/models/products.dart';
 // import 'package:login_app/services/auth_service.dart';
 // import 'package:provider/provider.dart';
@@ -18,7 +20,7 @@ class homeScreen extends StatelessWidget {
     // final productsService = Provider.of<ProductsService>(context);
     // final authService = Provider.of<AuthService>(context, listen: false);
 
-    // final List<Documento> documentos = InforasProvider.getJsonData('/documentos/') as List<Documento>;
+    final documentos = Provider.of<DocumentoService>(context).getDocumentos();
 
     // if (productsService.isLoading) return LoadingScreen();
     return Scaffold(
@@ -40,21 +42,50 @@ class homeScreen extends StatelessWidget {
         )
         ],
       ),
-      body: ListView.builder(
-        itemCount: /*productsService.products.length*/ 10,
+      // body: ListView.builder(
+      //   itemCount: /*productsService.products.length*/ 10,
+      //   itemBuilder: (context, index) {
+      //     return GestureDetector(
+      //       child: /*Text('Item: $index')*/ documentCard(/*product: productsService.products[index]*/ testName: "Titulo hiper mega largo que supera los carácteres permitidos", desc: "Descripcion super larga y con numero ultralargo con muchas palabras y letras con un numero ultrahipermega largo, tan largo que hasta un lorem no es comparable, no es rival, vaya numerin, 33? que va, mejor esta biblia, a ver que sacamos. Numero: ${index + 1}", additionalInfo: "Hola"),
+      //       onTap: () {
+      //         // productsService.selectedProduct = productsService.products[index].copy();
+      //         // Navigator.pushNamed(context, 'product');
+      //         print('Hola buenas noches');
+      //         Navigator.pushNamed(context, '/form');
+      //       },
+      //     );
+      //   },
+      // ),
+      body: FutureBuilder<List<Documento>>(
+  future: documentos, // Utiliza tu método para obtener la lista de eventos
+  builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    } else if (snapshot.hasError) {
+      // Maneja el caso de error
+      return Center(
+        child: Text('Error: ${snapshot.error}'),
+      );
+    } else {
+      // Cuando los datos están disponibles, muestra el ListView.builder
+      List<Documento> documentos = snapshot.data!;
+      return ListView.builder(
+        itemCount: documentos.length,
         itemBuilder: (context, index) {
           return GestureDetector(
-            child: /*Text('Item: $index')*/ documentCard(/*product: productsService.products[index]*/ testName: "Titulo hiper mega largo que supera los carácteres permitidos", desc: "Descripcion super larga y con numero ultralargo con muchas palabras y letras con un numero ultrahipermega largo, tan largo que hasta un lorem no es comparable, no es rival, vaya numerin, 33? que va, mejor esta biblia, a ver que sacamos. Numero: ${index + 1}", additionalInfo: "Hola"),
+            child: documentCard(testName: documentos[index].titulo, desc: "Descripcion super larga y con numero ultralargo con muchas palabras y letras con un numero ultrahipermega largo, tan largo que hasta un lorem no es comparable, no es rival, vaya numerin, 33? que va, mejor esta biblia, a ver que sacamos. Numero: ${index + 1}", additionalInfo: "Hola"),
             onTap: () {
-              // productsService.selectedProduct = productsService.products[index].copy();
-              // Navigator.pushNamed(context, 'product');
-              print('Hola buenas noches');
-              Navigator.pushNamed(context, '/form');
+              // Aquí podrías implementar la lógica para cuando se toca un evento en la lista
             },
           );
         },
-      ),
-      // bottomNavigationBar: CustomNavigationBottomBar(),
+      );
+    }
+  },
+),
+
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {

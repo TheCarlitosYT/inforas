@@ -3,7 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
+import 'package:inforas/models/models.dart';
 import 'package:inforas/navigation_menu.dart';
+import 'package:inforas/services/login_service.dart';
+import 'package:inforas/services/usuario_service.dart';
+import 'package:inforas/widgets/errorPopUp.dart';
 import 'package:inforas/widgets/widgets.dart';
 import 'package:inforas/ui/input_decorations.dart';
 
@@ -49,8 +53,8 @@ class _LogInFormState extends State<LogInForm> {
   String _email = '';
   String _password = '';
 
-  // final LoginService loginService = new LoginService();
-  // final ClienteService clienteService = new ClienteService();
+  final LoginService loginService = new LoginService();
+  final UsuarioService usuarioService = new UsuarioService();
 
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -138,40 +142,40 @@ class _LogInFormState extends State<LogInForm> {
 
   MaterialButton _SignInButton() {
     return MaterialButton(
-      onPressed: () => {
-        Get.to(() => const NavigationMenu())
-      // Navigator.pushReplacementNamed(context, '/home');
-      },
-      // onPressed: () {
-      //   if (_formKey.currentState!.validate()) {
-      //     Map<String, dynamic> data = {
-      //       'username': '$_email',
-      //       'password': '$_password',
-      //     };
-      //     loginService.login(data).then((value) {
-      //       print('El usuario existe');
-      //       Navigator.pushReplacementNamed(context, '/home');
-      //     }).catchError((error) {
-      //       print('Error durante el inicio de sesión $error');
-      //       if (error is Exception && error.toString().contains('401')) {
-      //         ErrorPopup(
-      //                 title: 'Log_In_Error',
-      //                 message: 'Bad_Credentials_Error_Message')
-      //             .showErrorPopup(context);
-      //         setState(() {
-      //           _loginError = true;
-      //         });
-      //       } else {
-      //         ErrorPopup(
-      //                 title: 'Log_In_Error',
-      //                 message: 'Log_In_Unknown_Error')
-      //             .showErrorPopup(context);
-      //       }
-      //     });
-      //   } else {
-      //     print('Not_Valid_Form_Error');
-      //   }
+      // onPressed: () => {
+      //   Get.to(() => const NavigationMenu()),
+      // Navigator.pushReplacementNamed(context, '/home'),
       // },
+      onPressed: () {
+        if (_formKey.currentState!.validate()) {
+          Map<String, dynamic> data = {
+            'username': '$_email',
+            'password': '$_password',
+          };
+          loginService.login(data).then((value) {
+            print('El usuario existe');
+            Navigator.pushReplacementNamed(context, '/home');
+          }).catchError((error) {
+            print('Error durante el inicio de sesión $error');
+            if (error is Exception && error.toString().contains('401')) {
+              ErrorPopup(
+                      title: 'Error en el inicio de sesión',
+                      message: 'Bad_Credentials_Error_Message')
+                  .showErrorPopup(context);
+              setState(() {
+                _loginError = true;
+              });
+            } else {
+              ErrorPopup(
+                      title: 'Error en el inicio de sesión',
+                      message: 'Log_In_Unknown_Error')
+                  .showErrorPopup(context);
+            }
+          });
+        } else {
+          print('Not_Valid_Form_Error');
+        }
+      },
       child: Text('Log In',
           style: TextStyle(
               color: Colors.white,
