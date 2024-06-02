@@ -38,7 +38,7 @@ class NavigationMenu extends StatelessWidget {
     final Rx<int> selectedIndex = 0.obs;
 
     final screens = [
-      const homeScreen(),
+      homeScreen(),
       const CalendarScreen(),
       const UserScreen()
     ];

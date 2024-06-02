@@ -13,6 +13,7 @@ class DocumentoService extends ChangeNotifier {
   late List<Documento> listaDocumentos = [];
 
   String apiToken = InforasProvider.apiKey;
+  
 
   // Future<String> crearDocumento(Map<String, dynamic> data) async {
   //   String titulo = data['titulo'];
@@ -52,6 +53,7 @@ class DocumentoService extends ChangeNotifier {
 
   Future<List<Documento>> getDocumentos() async {
     try {
+      print('hola ' + apiToken);
       final jsonData = await InforasProvider.getJsonData('/documentos');
       List<Documento> listaDocumentos = jsonData.map((json) => Documento.fromJson(json)).toList();
       listaDocumentos.forEach((documento) => print(documento));

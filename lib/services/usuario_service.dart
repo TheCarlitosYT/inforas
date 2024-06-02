@@ -16,7 +16,6 @@ class UsuarioService extends ChangeNotifier {
     String apellidos = data['apellidos'];
 
     Map<String, dynamic> newData = {
-      'estado': 'ACTIVO',
       'username': username,
       'password': password,
       'nombre': nombre,

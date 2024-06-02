@@ -5,6 +5,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:inforas/models/models.dart';
 import 'package:inforas/navigation_menu.dart';
+import 'package:inforas/providers/secure_storage.dart';
 import 'package:inforas/services/login_service.dart';
 import 'package:inforas/services/usuario_service.dart';
 import 'package:inforas/widgets/errorPopUp.dart';
@@ -48,7 +49,7 @@ class LogInForm extends StatefulWidget {
 
 class _LogInFormState extends State<LogInForm> {
   final _formKey = GlobalKey<FormState>();
-  // final SecureStorage secureStorage = SecureStorage();
+  final SecureStorage secureStorage = SecureStorage();
 
   String _email = '';
   String _password = '';
@@ -151,13 +152,15 @@ class _LogInFormState extends State<LogInForm> {
           };
           loginService.login(data).then((value) {
             print('El usuario existe');
-            Get.to(() => const NavigationMenu());
-          }).catchError((error) {
+            // Get.to(() => const NavigationMenu());
+            Navigator.pushNamed(context, '/home');
+          })
+          .catchError((error) {
             print('Error durante el inicio de sesión $error');
             if (error is Exception && error.toString().contains('401')) {
               ErrorPopup(
                       title: 'Error en el inicio de sesión',
-                      message: 'Bad_Credentials_Error_Message')
+                      message: 'Estas credenciales no existen.')
                   .showErrorPopup(context);
               setState(() {
                 _loginError = true;
@@ -165,7 +168,7 @@ class _LogInFormState extends State<LogInForm> {
             } else {
               ErrorPopup(
                       title: 'Error en el inicio de sesión',
-                      message: 'Log_In_Unknown_Error')
+                      message: 'Error desconocido')
                   .showErrorPopup(context);
             }
           });

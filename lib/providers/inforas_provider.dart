@@ -11,7 +11,6 @@ class InforasProvider {
 
   static Future<List<dynamic>> getJsonData(String endpoint) async {
     final url = Uri.http(_baseUrl, endpoint);
-
     Map<String, String> headers = {
       'Authorization': apiKey,
     };
