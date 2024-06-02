@@ -19,7 +19,7 @@ class homeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final productsService = Provider.of<ProductsService>(context);
-    // final authService = Provider.of<AuthService>(context, listen: false);
+  // final authService = Provider.of<AuthService>(context, listen: false);
 
     final checkTokenService = Provider.of<LoginService>(context, listen: false);
     // final documentos = Provider.of<DocumentoService>(context).getDocumentos();
@@ -35,7 +35,7 @@ class homeScreen extends StatelessWidget {
         actions: [
         IconButton(
           onPressed: (() {
-            // authService.logout();
+            checkTokenService.logout();
             
             print('cerraste sesión');
             Navigator.pushReplacementNamed(context, '/login');

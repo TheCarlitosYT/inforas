@@ -41,4 +41,17 @@ class LoginService extends ChangeNotifier {
     await storage.deleteAll();
     return 'LogOut Correctamente';
   }
+// Future logout() async {
+//     final response = await InforasProvider.postJsonData('/api/auth/signout', {});
+//     print('A');
+//     if (response == 'Logout successful') {
+//       await storage.deleteAll();
+//       print('si');
+//       return 'Logout successful';
+//     } else {
+//       print('fallo');
+//       throw Exception('Error during logout');
+//     }
+//   }
+
 }
