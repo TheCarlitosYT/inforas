@@ -20,7 +20,7 @@ class homeScreen extends StatefulWidget {
 
 class homeScreenState extends State<homeScreen> {
   // const homeScreen({Key? key}) : super(key: key);
-  
+
 Future<List<Documento>> getDocumentsList() async {
     List<Documento> documentosF = await DocumentoService().getDocumentos();
     return documentosF;
@@ -106,7 +106,7 @@ Future<List<Documento>> getDocumentsList() async {
                     child: documentCard(
                         testName: documento.titulo,
                         desc: documento.descripcion,
-                        additionalInfo: "Hola"),
+                        additionalInfo: documento.tipoDocumentacion),
                     onTap: () {
                       // Aquí puedes agregar la lógica para manejar la selección del documento
                     },
