@@ -47,7 +47,7 @@ class MainApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'InfoRAS',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/checkToken',
+      initialRoute: '/login',
       routes: getApplicationRoutes(),
     );
   }

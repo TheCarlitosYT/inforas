@@ -152,8 +152,8 @@ class _LogInFormState extends State<LogInForm> {
           };
           loginService.login(data).then((value) {
             print('El usuario existe');
-            // Get.to(() => const NavigationMenu());
-            Navigator.pushNamed(context, '/home');
+            Get.to(() => const NavigationMenu());
+            // Navigator.pushNamed(context, '/home');
           })
           .catchError((error) {
             print('Error durante el inicio de sesión $error');
