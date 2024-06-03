@@ -19,7 +19,7 @@ class DocumentViewingPage extends StatelessWidget {
               const Color.fromARGB(255, 255, 255, 255), //change your color here
         ),
         actions: buildViewingActions(context, documento),
-        title: const Text("Información del documento"),
+        title: const Text("Vista del documento"),
         titleTextStyle: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,

@@ -22,7 +22,6 @@ class DocumentEditingPage extends StatefulWidget {
 class _DocumentEditingPageState extends State<DocumentEditingPage> {
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
-  final lugarController = TextEditingController();
   final enlaceController = TextEditingController();
   var tipoController = TextEditingController();
   final descripcionController = TextEditingController();

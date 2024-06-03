@@ -25,7 +25,7 @@ class homeScreen extends StatelessWidget {
     // if (productsService.isLoading) return LoadingScreen();
     final documento = Documento(
           titulo: 'Titulo hiper mega largo',
-          tipoDocumentacion: "Example",
+          tipoDocumentacion: "Conferencia",
           descripcion: 'Descripcion',
           enlace: 'example.com'
           );
