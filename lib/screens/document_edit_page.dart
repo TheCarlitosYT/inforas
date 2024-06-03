@@ -276,8 +276,6 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
                 message: 'Intentelo de nuevo más tarde.',
               ).showErrorPopup(context);
             });
-
-        Navigator.of(context).pop();
       } else {
         documentoService.crearDocumento(data).then((value) {
                 SuccessPopup(title: 'Documento creado correctamente')
