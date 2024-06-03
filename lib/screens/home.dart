@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:inforas/models/documento.dart';
+import 'package:inforas/screens/document_viewing_page.dart';
 import 'package:inforas/services/documento_service.dart';
 import 'package:inforas/services/login_service.dart';
 import 'package:inforas/widgets/widgets.dart';
@@ -108,8 +109,10 @@ Future<List<Documento>> getDocumentsList() async {
                         desc: documento.descripcion,
                         additionalInfo: documento.tipoDocumentacion),
                     onTap: () {
-                      // Aquí puedes agregar la lógica para manejar la selección del documento
-                    },
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DocumentViewingPage(documento: documento)),
+              );                    },
                   );
                 },
               );
