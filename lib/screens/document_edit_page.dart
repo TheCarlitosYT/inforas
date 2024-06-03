@@ -5,6 +5,10 @@
 import 'package:flutter/material.dart';
 import 'package:inforas/models/documento.dart';
 import 'package:inforas/providers/documentos_provider.dart';
+import 'package:inforas/services/documento_service.dart';
+import 'package:inforas/services/login_service.dart';
+import 'package:inforas/widgets/errorPopUp.dart';
+import 'package:inforas/widgets/succesPopUp.dart';
 import 'package:provider/provider.dart';
 
 class DocumentEditingPage extends StatefulWidget {
@@ -20,6 +24,8 @@ class DocumentEditingPage extends StatefulWidget {
 }
 
 class _DocumentEditingPageState extends State<DocumentEditingPage> {
+    DocumentoService documentoService = new DocumentoService();
+
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   final enlaceController = TextEditingController();
@@ -30,9 +36,11 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
   void initState() {
     super.initState();
     if (widget.documento == null) {
-      tipoController.text = '';
+      tipoController.text = '';  
     } else {
+      
       final documento = widget.documento!;
+      print(documento.idDocumento);
       titleController.text = documento.titulo;
       enlaceController.text = documento.enlace;
       tipoController.text = documento.tipoDocumentacion;
@@ -45,7 +53,6 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
     titleController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -169,12 +176,28 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
     items: [
       // TODO: CHANGE Placeholder
       DropdownMenuItem(
-        child: Text('Conferencia'),
-        value: 'Conferencia',
+        child: Text('CFC general'),
+        value: 'CFC_General',
       ),
       DropdownMenuItem(
-        child: Text('Taller'),
-        value: 'Taller',
+        child: Text('Noonan general'),
+        value: 'Noonan_General',
+      ),
+      DropdownMenuItem(
+        child: Text('Neuropsicologia y NEE'),
+        value: 'Neuropsicologia_y_NEE',
+      ),
+      DropdownMenuItem(
+        child: Text('Talla Baja / Hormona Crecimiento'),
+        value: 'Talla_Baja_y_Hormona_Crec',
+      ),
+      DropdownMenuItem(
+        child: Text('Asociaciones / Instituciones'),
+        value: 'Asociaciones_Instituciones',
+      ),
+      DropdownMenuItem(
+        child: Text('Otros'),
+        value: 'Otros',
       ),
     ],
     onChanged: (value) {
@@ -215,26 +238,57 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
   Future saveForm() async {
     final isValid = _formKey.currentState!.validate();
     if (isValid) {
-      final documento = Documento(
-          titulo: titleController.text,
-          tipoDocumentacion: tipoController.text,
-          descripcion: descripcionController.text.isNotEmpty
+      // final documento = Documento(
+      //     titulo: titleController.text,
+      //     tipoDocumentacion: tipoController.text,
+      //     descripcion: descripcionController.text.isNotEmpty
+      //         ? descripcionController.text
+      //         : null,
+      //     enlace: enlaceController.text,
+      //     idUsuario: 1,
+      //     );
+
+          Map<String, dynamic> data = {
+              'titulo': '${titleController.text}',
+              'tipoDocumentacion': '${tipoController.text}',
+              'descripcion': '${descripcionController.text.isNotEmpty
               ? descripcionController.text
-              : null,
-          enlace: enlaceController.text,
-          idUsuario: 1,
-          );
+              : null}',
+              'enlace': '${enlaceController.text}',
+              'id_usuario': LoginService.usuario.id,
+            };
       final isEditing = widget.documento != null;
 
       //TODO: Documentos Provider
-      final provider = Provider.of<DocumentsProvider>(context, listen: false);
+      // final provider = Provider.of<DocumentsProvider>(context, listen: false);
 
       if (isEditing) {
-        provider.editDocumento(documento, widget.documento!);
+        // provider.editDocumento(documento, widget.documento!);
+        final documento = widget.documento!;
+
+        documentoService.actualizarDocumento(documento.idDocumento!, data).then((value) {
+              Navigator.of(context).pop();
+              SuccessPopup(title: 'Cambios realizados correctamente')
+              .showSuccessPopup(context);
+              }).catchError((error) {
+              ErrorPopup(
+                title: 'Error al actualizar el documento',
+                message: 'Intentelo de nuevo más tarde.',
+              ).showErrorPopup(context);
+            });
 
         Navigator.of(context).pop();
       } else {
-        provider.addDocumento(documento);
+        documentoService.crearDocumento(data).then((value) {
+                SuccessPopup(title: 'Documento creado correctamente')
+                    .showSuccessPopup(context);
+              }).catchError((error) {
+                ErrorPopup(
+                    title: 'Error al crear el documento',
+                    message: 'Intentelo de nuevo más tarde.');
+                print('Error durante la creación de Incidencia $error');
+              });
+        // provider.addDocumento(documento);
       }
       Navigator.of(context).pop();
     }
