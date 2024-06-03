@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:inforas/models/documento.dart';
 import 'package:inforas/models/models.dart';
+import 'package:inforas/navigation_menu.dart';
 import 'package:inforas/providers/inforas_provider.dart';
 import 'package:inforas/services/login_service.dart';
 import 'package:intl/intl.dart';
@@ -93,10 +95,9 @@ Future<void> actualizarDocumento(int documentoId, Map<String, dynamic> data) asy
   Future<void> deleteDocumento(int documentoId) async {
     final response =
         await InforasProvider.deleteData('/documentos/$documentoId');
-
     print(response);
-
     listaDocumentos.removeWhere((documento) => documento.idDocumento == documentoId);
+    Get.to (() => const NavigationMenu());
     notifyListeners();
   }
 }

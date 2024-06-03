@@ -3,7 +3,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:inforas/models/documento.dart';
+import 'package:inforas/navigation_menu.dart';
 import 'package:inforas/providers/documentos_provider.dart';
 import 'package:inforas/services/documento_service.dart';
 import 'package:inforas/services/login_service.dart';
@@ -259,15 +261,11 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
             };
       final isEditing = widget.documento != null;
 
-      //TODO: Documentos Provider
-      // final provider = Provider.of<DocumentsProvider>(context, listen: false);
-
       if (isEditing) {
         // provider.editDocumento(documento, widget.documento!);
         final documento = widget.documento!;
 
         documentoService.actualizarDocumento(documento.idDocumento!, data).then((value) {
-              Navigator.of(context).pop();
               SuccessPopup(title: 'Cambios realizados correctamente')
               .showSuccessPopup(context);
               }).catchError((error) {
@@ -279,7 +277,7 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
       } else {
         documentoService.crearDocumento(data).then((value) {
                 SuccessPopup(title: 'Documento creado correctamente')
-                    .showSuccessPopup(context);
+                .showSuccessPopup(context);
               }).catchError((error) {
                 ErrorPopup(
                     title: 'Error al crear el documento',
@@ -288,7 +286,7 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
               });
         // provider.addDocumento(documento);
       }
-      Navigator.of(context).pop();
+      Get.to(() => const NavigationMenu(index: 0,));
     }
   }
 }

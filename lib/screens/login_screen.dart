@@ -152,7 +152,7 @@ class _LogInFormState extends State<LogInForm> {
           };
           loginService.login(data).then((value) {
             print('El usuario existe');
-            Get.to(() => const NavigationMenu());
+            Get.to(() => const NavigationMenu(index: 0,));
             // Navigator.pushNamed(context, '/home');
           })
           .catchError((error) {
