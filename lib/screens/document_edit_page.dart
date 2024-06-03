@@ -24,7 +24,7 @@ class DocumentEditingPage extends StatefulWidget {
 }
 
 class _DocumentEditingPageState extends State<DocumentEditingPage> {
-    DocumentoService documentoService = new DocumentoService();
+  DocumentoService documentoService = new DocumentoService();
 
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inforas/models/documento.dart';
 import 'package:inforas/providers/documentos_provider.dart';
 import 'package:inforas/screens/document_edit_page.dart';
+import 'package:inforas/services/documento_service.dart';
 import 'package:provider/provider.dart';
 
 class DocumentViewingPage extends StatelessWidget {
@@ -9,8 +10,10 @@ class DocumentViewingPage extends StatelessWidget {
 
   const DocumentViewingPage({Key? key, required this.documento}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
+    DocumentoService documentoService = new DocumentoService();
     return Scaffold(
       appBar: AppBar(
         leading: CloseButton(),
@@ -18,7 +21,7 @@ class DocumentViewingPage extends StatelessWidget {
           color:
               const Color.fromARGB(255, 255, 255, 255), //change your color here
         ),
-        actions: buildViewingActions(context, documento),
+        actions: buildViewingActions(context, documento, documentoService),
         title: const Text("Vista del documento"),
         titleTextStyle: TextStyle(
           fontSize: 18,
@@ -42,7 +45,7 @@ class DocumentViewingPage extends StatelessWidget {
   }
 
 
-  List<Widget> buildViewingActions(BuildContext context, Documento documento) {
+  List<Widget> buildViewingActions(BuildContext context, Documento documento, DocumentoService documentoService) {
     return [
       IconButton(
         icon: Icon(Icons.edit),
@@ -53,12 +56,40 @@ class DocumentViewingPage extends StatelessWidget {
         ),
       ),
       IconButton(
-        icon: Icon(Icons.delete),
-        onPressed: () {
-          final provider = Provider.of<DocumentsProvider>(context, listen: false);
-          provider.deleteDocumento(documento);
-        },
-      ),
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                // Mostrar un cuadro de diálogo de confirmación
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Eliminar Documento'),
+                      content: Text(
+                          '¿Estás seguro de que quieres eliminar este documento?'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
+                          },
+                          child: Text('Cancelar'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            // Eliminar el producto
+                            // Provider.of<ProductsService>(context, listen: false)
+                            //     .deleteProduct(product);
+                            _eliminarDocumento(documento, documentoService);
+                            Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Eliminar'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
     ];
   }
 
@@ -110,5 +141,10 @@ class DocumentViewingPage extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void _eliminarDocumento(Documento documento, DocumentoService documentoService) {
+    documentoService.deleteDocumento(documento.idDocumento!);
+    print('Eliminar favorito ${documento.idDocumento}');
   }
 }
