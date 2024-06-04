@@ -442,6 +442,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
               });
       }
       Get.to(() => const NavigationMenu(index: 1,));
+      setState(() {});
     }
   }
 }

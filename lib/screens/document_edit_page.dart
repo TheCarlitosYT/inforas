@@ -287,6 +287,7 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
         // provider.addDocumento(documento);
       }
       Get.to(() => const NavigationMenu(index: 0,));
+      setState(() {});
     }
   }
 }
