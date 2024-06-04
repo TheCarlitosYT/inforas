@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:inforas/models/evento.dart';
-import 'package:inforas/providers/events_provider.dart';
+import 'package:inforas/navigation_menu.dart';
 import 'package:inforas/screens/screens.dart';
+import 'package:inforas/services/evento_service.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:intl/date_symbol_data_local.dart'; // for other locales
 
 class EventViewingPage extends StatelessWidget {
   final Evento evento;
@@ -13,6 +13,8 @@ class EventViewingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    EventoService eventoService = new EventoService();
+
     return Scaffold(
       appBar: AppBar(
         leading: CloseButton(),
@@ -20,7 +22,7 @@ class EventViewingPage extends StatelessWidget {
           color:
               const Color.fromARGB(255, 255, 255, 255), //change your color here
         ),
-        actions: buildViewingActions(context, evento),
+        actions: buildViewingActions(context, evento, eventoService),
         title: const Text("Información del evento"),
         titleTextStyle: TextStyle(
           fontSize: 18,
@@ -78,7 +80,7 @@ class EventViewingPage extends StatelessWidget {
     );
   }
 
-  List<Widget> buildViewingActions(BuildContext context, Evento evento) {
+  List<Widget> buildViewingActions(BuildContext context, Evento evento, EventoService eventoService) {
     return [
       IconButton(
         icon: Icon(Icons.edit),
@@ -89,12 +91,35 @@ class EventViewingPage extends StatelessWidget {
         ),
       ),
       IconButton(
-        icon: Icon(Icons.delete),
-        onPressed: () {
-          final provider = Provider.of<EventsProvider>(context, listen: false);
-          provider.deleteEvento(evento);
-        },
-      ),
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Eliminar Evento'),
+                      content: Text(
+                          '¿Estás seguro de que quieres eliminar este evento?'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Cancelar'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            _eliminarDocumento(evento, eventoService);
+                            Navigator.of(context).pop(true);
+                          },
+                          child: Text('Eliminar'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
     ];
   }
 
@@ -159,5 +184,9 @@ class EventViewingPage extends StatelessWidget {
         ),
       ],
     );
+  }
+  void _eliminarDocumento(Evento evento, EventoService eventoService) {
+    eventoService.deleteEvento(evento.idEventos!);
+    print('Eliminar favorito ${evento.idEventos}');
   }
 }

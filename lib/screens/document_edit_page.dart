@@ -6,12 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inforas/models/documento.dart';
 import 'package:inforas/navigation_menu.dart';
-import 'package:inforas/providers/documentos_provider.dart';
 import 'package:inforas/services/documento_service.dart';
 import 'package:inforas/services/login_service.dart';
 import 'package:inforas/widgets/errorPopUp.dart';
 import 'package:inforas/widgets/succesPopUp.dart';
-import 'package:provider/provider.dart';
 
 class DocumentEditingPage extends StatefulWidget {
   final Documento? documento;

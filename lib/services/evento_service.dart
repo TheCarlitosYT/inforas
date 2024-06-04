@@ -7,7 +7,6 @@ import 'package:inforas/models/models.dart';
 import 'package:inforas/navigation_menu.dart';
 import 'package:inforas/providers/inforas_provider.dart';
 import 'package:inforas/services/login_service.dart';
-import 'package:intl/intl.dart';
 
 
 class EventoService extends ChangeNotifier {

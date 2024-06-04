@@ -8,13 +8,11 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:inforas/models/evento.dart';
 import 'package:inforas/navigation_menu.dart';
-import 'package:inforas/providers/events_provider.dart';
 import 'package:inforas/services/evento_service.dart';
 import 'package:inforas/services/login_service.dart';
 import 'package:inforas/utils/utils.dart';
 import 'package:inforas/widgets/errorPopUp.dart';
 import 'package:inforas/widgets/succesPopUp.dart';
-import 'package:provider/provider.dart';
 
 class EventEditingPage extends StatefulWidget {
   final Evento? evento;

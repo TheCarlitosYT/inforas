@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:inforas/models/documento.dart';
-import 'package:inforas/providers/documentos_provider.dart';
+import 'package:inforas/navigation_menu.dart';
 import 'package:inforas/screens/document_edit_page.dart';
 import 'package:inforas/services/documento_service.dart';
-import 'package:provider/provider.dart';
 
 class DocumentViewingPage extends StatelessWidget {
   final Documento documento;
@@ -58,7 +58,6 @@ class DocumentViewingPage extends StatelessWidget {
       IconButton(
               icon: Icon(Icons.delete),
               onPressed: () {
-                // Mostrar un cuadro de diálogo de confirmación
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -69,18 +68,14 @@ class DocumentViewingPage extends StatelessWidget {
                       actions: [
                         TextButton(
                           onPressed: () {
-                            Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
+                            Navigator.of(context).pop();
                           },
                           child: Text('Cancelar'),
                         ),
                         TextButton(
                           onPressed: () {
-                            // Eliminar el producto
-                            // Provider.of<ProductsService>(context, listen: false)
-                            //     .deleteProduct(product);
                             _eliminarDocumento(documento, documentoService);
-                            Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
-                            Navigator.of(context).pop();
+                            Navigator.of(context).pop(true);
                           },
                           child: Text('Eliminar'),
                         ),
