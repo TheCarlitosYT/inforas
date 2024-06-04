@@ -16,8 +16,6 @@ class CalendarScreen extends StatelessWidget {
         actions: [
         IconButton(
           onPressed: (() {
-            // authService.logout();
-            
             print('cerraste sesión');
             Navigator.pushReplacementNamed(context, '/login');
           }), 
@@ -29,11 +27,6 @@ class CalendarScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          // productsService.selectedProduct = new Product(
-          //   available: false, 
-          //   name: '', 
-          //   price: 0
-          //   );
           Navigator.pushNamed(context, '/eventoform');
         },
       ),

@@ -6,6 +6,7 @@ class Evento {
     int? idEventos;
     String titulo;
     String tipoEvento;
+    String formatoEvento;
     String? descripcion;
     String? enlace;
     DateTime fecha;
@@ -16,6 +17,7 @@ class Evento {
         this.idEventos,
         required this.titulo,
         required this.tipoEvento,
+        required this.formatoEvento,
         this.descripcion,
         this.enlace,
         required this.fecha,
@@ -31,6 +33,7 @@ class Evento {
         idEventos: json["id_eventos"],
         titulo: json["titulo"],
         tipoEvento: json["tipoEvento"],
+        formatoEvento: json["formatoEvento"],
         descripcion: json["descripcion"],
         enlace: json["enlace"],
         fecha: DateTime.parse(json["fecha"]),
@@ -42,6 +45,7 @@ class Evento {
         "id_eventos": idEventos,
         "titulo": titulo,
         "tipoEvento": tipoEvento,
+        "formatoEvento": formatoEvento,
         "descripcion": descripcion,
         "enlace": enlace,
         "fecha": fecha.toIso8601String(),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:inforas/screens/check_token_screen.dart';
+import 'package:inforas/services/login_service.dart';
 import 'package:inforas/widgets/errorPopUp.dart';
 
 class UserScreen extends StatelessWidget {
@@ -6,6 +8,7 @@ class UserScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LoginService CheckTokenScreen = new LoginService();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.purple,
@@ -26,7 +29,7 @@ class UserScreen extends StatelessWidget {
           Expanded(child: Container()), 
           settingsButton(context),
           SizedBox(height: 20),
-          logOutButton(),
+          logOutButton(CheckTokenScreen ,context),
         ],
       ),
       ),
@@ -73,14 +76,17 @@ class UserScreen extends StatelessWidget {
     );
   }
 
-  Widget logOutButton() {
+  Widget logOutButton(LoginService checkTokenService, BuildContext context) {
     return SizedBox(
       width: double.infinity,
       height: 50,
       child: ElevatedButton(
-        onPressed: () {
-          // Acción cuando se presiona el botón de Cerrar Sesión
-        },
+        onPressed: (() {
+                checkTokenService.logout();
+
+                print('cerraste sesión');
+                Navigator.pushReplacementNamed(context, '/login');
+              }),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.red,
           shape: RoundedRectangleBorder(

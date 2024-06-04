@@ -28,6 +28,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
   final lugarController = TextEditingController();
   final enlaceController = TextEditingController();
   var tipoController = TextEditingController();
+  var formatoController = TextEditingController();
   final descripcionController = TextEditingController();
 
   late DateTime fechaHoraEvento;
@@ -44,6 +45,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
       lugarController.text = event.lugar;
       enlaceController.text = event.enlace ?? "";
       tipoController.text = event.tipoEvento;
+      formatoController.text = event.formatoEvento;
       fechaHoraEvento = event.fecha;
       descripcionController.text = event.descripcion ?? '';
     }
@@ -91,8 +93,11 @@ class _EventEditingPageState extends State<EventEditingPage> {
                 SizedBox(height: 12),
                 buildTipoEvento(),
                 SizedBox(height: 12),
+                buildFormatoEvento(),
+                SizedBox(height: 12),
                 buildDescription(),
                 SizedBox(height: 12),
+                
               ],
             ),
           ),
@@ -195,12 +200,24 @@ class _EventEditingPageState extends State<EventEditingPage> {
     items: [
       // Placeholder
       DropdownMenuItem(
-        child: Text('Conferencia'),
-        value: 'Conferencia',
+        child: Text('Jornada'),
+        value: 'Jornada',
       ),
       DropdownMenuItem(
         child: Text('Taller'),
         value: 'Taller',
+      ),
+      DropdownMenuItem(
+        child: Text('Deportivo'),
+        value: 'Deportivo',
+      ),
+      DropdownMenuItem(
+        child: Text('Encuentro'),
+        value: 'Encuentro',
+      ),
+      DropdownMenuItem(
+        child: Text('Otro'),
+        value: 'Otro',
       ),
     ],
     onChanged: (value) {
@@ -217,6 +234,43 @@ class _EventEditingPageState extends State<EventEditingPage> {
     validator: (value) => value!.isEmpty ? value = "Sin categoría" : null,
   ));
 
+  Widget buildFormatoEvento() => buildHeader(
+  header: 'Formato del evento',
+  child: DropdownButtonFormField(
+    style: TextStyle(fontSize: 15, color: Colors.black),
+    decoration: InputDecoration(
+      border: UnderlineInputBorder(),
+      hintText: 'Indique el formato del evento',
+      hintStyle: TextStyle(fontSize: 15),
+    ),
+    items: [
+      // Placeholder
+      DropdownMenuItem(
+        child: Text('Presencial'),
+        value: 'PRESENCIAL',
+      ),
+      DropdownMenuItem(
+        child: Text('Híbrido'),
+        value: 'HIBRIDO',
+      ),
+      DropdownMenuItem(
+        child: Text('Online'),
+        value: 'ONLINE',
+      ),
+    ],
+    onChanged: (value) {
+      setState(() {
+        if (value != null){
+        formatoController.text = value;
+        } else {
+          formatoController.text = '' ;
+        }
+      });
+    },
+    value: formatoController.text.isNotEmpty ? formatoController.text : null,
+    onSaved: (_) {},
+    validator: (value) => value!.isEmpty ? value = "Sin categoría" : null,
+  ));
   Widget buildDatePickers() => Column(
         children: [
           buildFrom(),
@@ -325,6 +379,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
       final evento = Evento(
           titulo: titleController.text,
           tipoEvento: tipoController.text,
+          formatoEvento: formatoController.text,
           descripcion: descripcionController.text.isNotEmpty
               ? descripcionController.text
               : null,
