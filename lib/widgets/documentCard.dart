@@ -25,46 +25,6 @@ class documentCard extends StatelessWidget {
         child: Stack(alignment: Alignment.bottomLeft, children: [
           // _BackgroundImage(product.picture),
           _docDetails(additionalInfo),
-
-          Positioned(
-            top: 0,
-            right: 0,
-            child: IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () {
-                // Mostrar un cuadro de diálogo de confirmación
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text('Eliminar Documento'),
-                      content: Text(
-                          '¿Estás seguro de que quieres eliminar este documento?'),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pop(); // Cerrar el cuadro de diálogo
-                          },
-                          child: Text('Cancelar'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            // Eliminar el producto
-                            // Provider.of<ProductsService>(context, listen: false)
-                            //     .deleteProduct(product);
-                            Navigator.of(context)
-                                .pop(); // Cerrar el cuadro de diálogo
-                          },
-                          child: Text('Eliminar'),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-            ),
-          ),
           Stack(
             alignment: Alignment.topLeft,
             children: [
