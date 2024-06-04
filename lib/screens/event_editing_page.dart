@@ -5,9 +5,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:inforas/models/evento.dart';
+import 'package:inforas/navigation_menu.dart';
 import 'package:inforas/providers/events_provider.dart';
+import 'package:inforas/services/evento_service.dart';
+import 'package:inforas/services/login_service.dart';
 import 'package:inforas/utils/utils.dart';
+import 'package:inforas/widgets/errorPopUp.dart';
+import 'package:inforas/widgets/succesPopUp.dart';
 import 'package:provider/provider.dart';
 
 class EventEditingPage extends StatefulWidget {
@@ -23,6 +29,8 @@ class EventEditingPage extends StatefulWidget {
 }
 
 class _EventEditingPageState extends State<EventEditingPage> {
+  EventoService eventoService = EventoService();
+
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   final lugarController = TextEditingController();
@@ -97,7 +105,6 @@ class _EventEditingPageState extends State<EventEditingPage> {
                 SizedBox(height: 12),
                 buildDescription(),
                 SizedBox(height: 12),
-                
               ],
             ),
           ),
@@ -136,7 +143,6 @@ class _EventEditingPageState extends State<EventEditingPage> {
         controller: titleController,
       ));
 
-
   Widget buildLugar() => buildHeader(
       header: 'Lugar donde se realiza el evento',
       child: TextFormField(
@@ -149,7 +155,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
         onFieldSubmitted: (_) {},
         validator: (value) => value!.isEmpty ? value = "Sin lugar" : null,
         controller: lugarController,
-  ));
+      ));
 
   Widget buildEnlace() => buildHeader(
       header: 'Enlace del evento',
@@ -162,7 +168,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
         ),
         onFieldSubmitted: (_) {},
         controller: enlaceController,
-  ));
+      ));
 
   Widget buildDescription() => buildHeader(
       header: 'Descripción del evento',
@@ -187,90 +193,91 @@ class _EventEditingPageState extends State<EventEditingPage> {
           controller: descripcionController,
           onSubmitted: (_) {},
         ),
-  ));
+      ));
   Widget buildTipoEvento() => buildHeader(
-  header: 'Tipo de evento',
-  child: DropdownButtonFormField(
-    style: TextStyle(fontSize: 15, color: Colors.black),
-    decoration: InputDecoration(
-      border: UnderlineInputBorder(),
-      hintText: 'Indique el tipo de evento',
-      hintStyle: TextStyle(fontSize: 15),
-    ),
-    items: [
-      // Placeholder
-      DropdownMenuItem(
-        child: Text('Jornada'),
-        value: 'Jornada',
-      ),
-      DropdownMenuItem(
-        child: Text('Taller'),
-        value: 'Taller',
-      ),
-      DropdownMenuItem(
-        child: Text('Deportivo'),
-        value: 'Deportivo',
-      ),
-      DropdownMenuItem(
-        child: Text('Encuentro'),
-        value: 'Encuentro',
-      ),
-      DropdownMenuItem(
-        child: Text('Otro'),
-        value: 'Otro',
-      ),
-    ],
-    onChanged: (value) {
-      setState(() {
-        if (value != null){
-        tipoController.text = value;
-        } else {
-          tipoController.text = '' ;
-        }
-      });
-    },
-    value: tipoController.text.isNotEmpty ? tipoController.text : null,
-    onSaved: (_) {},
-    validator: (value) => value!.isEmpty ? value = "Sin categoría" : null,
-  ));
+      header: 'Tipo de evento',
+      child: DropdownButtonFormField(
+        style: TextStyle(fontSize: 15, color: Colors.black),
+        decoration: InputDecoration(
+          border: UnderlineInputBorder(),
+          hintText: 'Indique el tipo de evento',
+          hintStyle: TextStyle(fontSize: 15),
+        ),
+        items: [
+          // Placeholder
+          DropdownMenuItem(
+            child: Text('Jornada'),
+            value: 'Jornada',
+          ),
+          DropdownMenuItem(
+            child: Text('Taller'),
+            value: 'Taller',
+          ),
+          DropdownMenuItem(
+            child: Text('Deportivo'),
+            value: 'Deportivo',
+          ),
+          DropdownMenuItem(
+            child: Text('Encuentro'),
+            value: 'Encuentro',
+          ),
+          DropdownMenuItem(
+            child: Text('Otro'),
+            value: 'Otro',
+          ),
+        ],
+        onChanged: (value) {
+          setState(() {
+            if (value != null) {
+              tipoController.text = value;
+            } else {
+              tipoController.text = '';
+            }
+          });
+        },
+        value: tipoController.text.isNotEmpty ? tipoController.text : null,
+        onSaved: (_) {},
+        validator: (value) => value!.isEmpty ? value = "Sin categoría" : null,
+      ));
 
   Widget buildFormatoEvento() => buildHeader(
-  header: 'Formato del evento',
-  child: DropdownButtonFormField(
-    style: TextStyle(fontSize: 15, color: Colors.black),
-    decoration: InputDecoration(
-      border: UnderlineInputBorder(),
-      hintText: 'Indique el formato del evento',
-      hintStyle: TextStyle(fontSize: 15),
-    ),
-    items: [
-      // Placeholder
-      DropdownMenuItem(
-        child: Text('Presencial'),
-        value: 'PRESENCIAL',
-      ),
-      DropdownMenuItem(
-        child: Text('Híbrido'),
-        value: 'HIBRIDO',
-      ),
-      DropdownMenuItem(
-        child: Text('Online'),
-        value: 'ONLINE',
-      ),
-    ],
-    onChanged: (value) {
-      setState(() {
-        if (value != null){
-        formatoController.text = value;
-        } else {
-          formatoController.text = '' ;
-        }
-      });
-    },
-    value: formatoController.text.isNotEmpty ? formatoController.text : null,
-    onSaved: (_) {},
-    validator: (value) => value!.isEmpty ? value = "Sin categoría" : null,
-  ));
+      header: 'Formato del evento',
+      child: DropdownButtonFormField(
+        style: TextStyle(fontSize: 15, color: Colors.black),
+        decoration: InputDecoration(
+          border: UnderlineInputBorder(),
+          hintText: 'Indique el formato del evento',
+          hintStyle: TextStyle(fontSize: 15),
+        ),
+        items: [
+          // Placeholder
+          DropdownMenuItem(
+            child: Text('Presencial'),
+            value: 'PRESENCIAL',
+          ),
+          DropdownMenuItem(
+            child: Text('Híbrido'),
+            value: 'HIBRIDO',
+          ),
+          DropdownMenuItem(
+            child: Text('Online'),
+            value: 'ONLINE',
+          ),
+        ],
+        onChanged: (value) {
+          setState(() {
+            if (value != null) {
+              formatoController.text = value;
+            } else {
+              formatoController.text = '';
+            }
+          });
+        },
+        value:
+            formatoController.text.isNotEmpty ? formatoController.text : null,
+        onSaved: (_) {},
+        validator: (value) => value!.isEmpty ? value = "Sin categoría" : null,
+      ));
   Widget buildDatePickers() => Column(
         children: [
           buildFrom(),
@@ -315,7 +322,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
       final date = await showDatePicker(
         context: context,
         initialDate: fechaHoraEvento,
-        firstDate: fechaHoraEvento ?? DateTime(2022, 12, 31),
+        firstDate: DateTime.now(),
         lastDate: DateTime(2101),
       );
       if (date == null) return null;
@@ -376,31 +383,65 @@ class _EventEditingPageState extends State<EventEditingPage> {
   Future saveForm() async {
     final isValid = _formKey.currentState!.validate();
     if (isValid) {
-      final evento = Evento(
-          titulo: titleController.text,
-          tipoEvento: tipoController.text,
-          formatoEvento: formatoController.text,
-          descripcion: descripcionController.text.isNotEmpty
-              ? descripcionController.text
-              : null,
-          enlace: enlaceController.text.isNotEmpty ? enlaceController.text : null,
-          fecha: fechaHoraEvento,
-          lugar: lugarController.text,
-          idUsuario: 1,
-          );
+      // final evento = Evento(
+      //   titulo: titleController.text,
+      //   tipoEvento: tipoController.text,
+      //   formatoEvento: formatoController.text,
+      //   descripcion: descripcionController.text.isNotEmpty
+      //       ? descripcionController.text
+      //       : null,
+      //   enlace: enlaceController.text.isNotEmpty ? enlaceController.text : null,
+      //   fecha: fechaHoraEvento,
+      //   lugar: lugarController.text,
+      //   idUsuario: 1,
+      // );
+
+      Map<String, dynamic> newData = {
+        'titulo': '${titleController.text}',
+        'descripcion': descripcionController.text.isNotEmpty
+            ? descripcionController.text
+            : null,
+        'tipoEvento': '${tipoController.text}',
+        'formatoEvento': '${formatoController.text}',
+        'fecha': fechaHoraEvento.toIso8601String(),
+        'lugar': '${lugarController.text}',
+        'enlace':
+            enlaceController.text.isNotEmpty ? enlaceController.text : null,
+        'id_usuario': LoginService.usuario.id,
+      };
       //Pensando como hacerlo, ya que en el caso de eventos, tanto el enlace como el lugar pueden ser opcionales.
       final isEditing = widget.evento != null;
 
-      final provider = Provider.of<EventsProvider>(context, listen: false);
+      // final provider = Provider.of<EventsProvider>(context, listen: false);
 
       if (isEditing) {
-        provider.editEvento(evento, widget.evento!);
+        // provider.editEvento(evento, widget.evento!);
 
-        Navigator.of(context).pop();
+        // Navigator.of(context).pop();
+        final evento = widget.evento!;
+
+        eventoService.actualizarEvento(evento.idEventos!, newData).then((value) {
+              SuccessPopup(title: 'Cambios realizados correctamente')
+              .showSuccessPopup(context);
+              }).catchError((error) {
+              ErrorPopup(
+                title: 'Error al actualizar el documento',
+                message: 'Intentelo de nuevo más tarde.',
+              ).showErrorPopup(context);
+            });
+
       } else {
-        provider.addEvento(evento);
+        eventoService.crearEvento(newData).then((value) {
+                SuccessPopup(title: 'Documento creado correctamente')
+                .showSuccessPopup(context);
+              }).catchError((error) {
+                ErrorPopup(
+                    title: 'Error al crear el documento',
+                    message: 'Intentelo de nuevo más tarde.');
+                print('Error durante la creación de Incidencia $error');
+              });
       }
-      Navigator.of(context).pop();
+      Get.to(() => const NavigationMenu(index: 1,));
     }
   }
 }

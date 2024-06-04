@@ -54,6 +54,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:inforas/screens/screens.dart';
 import 'package:inforas/screens/userScreen.dart';
 
@@ -73,10 +74,11 @@ class NavigationMenu extends StatelessWidget {
           selectedIndex: controller.selectedIndex.value,
           onDestinationSelected: (index) => controller.selectedIndex.value = index,
           backgroundColor: Colors.white,
+          // ignore: prefer_const_literals_to_create_immutables
           destinations: [
-            NavigationDestination(icon: Icon(Icons.edit_document), label: 'Documentos'),
-            NavigationDestination(icon: Icon(Icons.calendar_today), label: 'Eventos'),
-            NavigationDestination(icon: Icon(Icons.person), label: 'Perfil'),
+            NavigationDestination(icon: Icon(Iconsax.document), label: 'Documentos'),
+            NavigationDestination(icon: Icon(Iconsax.calendar), label: 'Eventos'),
+            NavigationDestination(icon: Icon(Iconsax.personalcard), label: 'Perfil'),
           ],
         ),
       ),
