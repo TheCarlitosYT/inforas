@@ -2,12 +2,14 @@
 
 // ignore_for_file: prefer_const_constructors
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inforas/models/documento.dart';
 import 'package:inforas/navigation_menu.dart';
 import 'package:inforas/services/documento_service.dart';
 import 'package:inforas/services/login_service.dart';
+import 'package:inforas/widgets/addDocuments.dart';
 import 'package:inforas/widgets/errorPopUp.dart';
 import 'package:inforas/widgets/succesPopUp.dart';
 
@@ -26,7 +28,7 @@ class DocumentEditingPage extends StatefulWidget {
 class _DocumentEditingPageState extends State<DocumentEditingPage> {
   DocumentoService documentoService = new DocumentoService();
   NavigationMenuController navigationMenuController = Get.put(NavigationMenuController());
-
+  PlatformFile? selectedFile;
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   final enlaceController = TextEditingController();
@@ -37,9 +39,8 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
   void initState() {
     super.initState();
     if (widget.documento == null) {
-      tipoController.text = '';  
+      tipoController.text = '';
     } else {
-      
       final documento = widget.documento!;
       print(documento.idDocumento);
       titleController.text = documento.titulo;
@@ -54,6 +55,7 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
     titleController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -65,7 +67,9 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
           actions: buildEditingActions(),
           backgroundColor: Colors.purple,
           title: Text(
-            widget.documento == null ? 'Crear un nuevo documento' : 'Editar documento',
+            widget.documento == null
+                ? 'Crear un nuevo documento'
+                : 'Editar documento',
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -88,6 +92,7 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
                 SizedBox(height: 12),
                 buildDescription(),
                 SizedBox(height: 12),
+                buildAddDocumento(),
               ],
             ),
           ),
@@ -139,7 +144,7 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
         validator: (value) =>
             value!.isEmpty ? 'Por favor, ingrese un enlace.' : null,
         controller: enlaceController,
-  ));
+      ));
 
   Widget buildDescription() => buildHeader(
       header: 'Descripción del documento',
@@ -164,55 +169,53 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
           controller: descripcionController,
           onSubmitted: (_) {},
         ),
-  ));
+      ));
   Widget buildTipoDocumento() => buildHeader(
-  header: 'Tipo de documento',
-  child: DropdownButtonFormField(
-    style: TextStyle(fontSize: 15, color: Colors.black),
-    decoration: InputDecoration(
-      border: UnderlineInputBorder(),
-      hintText: 'Indique el tipo de documento',
-      hintStyle: TextStyle(fontSize: 15),
-    ),
-    items: [
-      DropdownMenuItem(
-        child: Text('CFC general'),
-        value: 'CFC_General',
-      ),
-      DropdownMenuItem(
-        child: Text('Noonan general'),
-        value: 'Noonan_General',
-      ),
-      DropdownMenuItem(
-        child: Text('Neuropsicologia y NEE'),
-        value: 'Neuropsicologia_y_NEE',
-      ),
-      DropdownMenuItem(
-        child: Text('Talla Baja / Hormona Crecimiento'),
-        value: 'Talla_Baja_y_Hormona_Crec',
-      ),
-      DropdownMenuItem(
-        child: Text('Asociaciones / Instituciones'),
-        value: 'Asociaciones_Instituciones',
-      ),
-      DropdownMenuItem(
-        child: Text('Otros'),
-        value: 'Otros',
-      ),
-    ],
-    onChanged: (value) {
-      setState(() {
-        if (value != null){
-        tipoController.text = value;
-        }
-      });
-    },
-    value: tipoController.text.isNotEmpty ? tipoController.text : null,
-    onSaved: (_) {},
-    validator: (value) => value == null ? value = "Sin categoría" : null,
-  ));
-
-
+      header: 'Tipo de documento',
+      child: DropdownButtonFormField(
+        style: TextStyle(fontSize: 15, color: Colors.black),
+        decoration: InputDecoration(
+          border: UnderlineInputBorder(),
+          hintText: 'Indique el tipo de documento',
+          hintStyle: TextStyle(fontSize: 15),
+        ),
+        items: [
+          DropdownMenuItem(
+            child: Text('CFC general'),
+            value: 'CFC_General',
+          ),
+          DropdownMenuItem(
+            child: Text('Noonan general'),
+            value: 'Noonan_General',
+          ),
+          DropdownMenuItem(
+            child: Text('Neuropsicologia y NEE'),
+            value: 'Neuropsicologia_y_NEE',
+          ),
+          DropdownMenuItem(
+            child: Text('Talla Baja / Hormona Crecimiento'),
+            value: 'Talla_Baja_y_Hormona_Crec',
+          ),
+          DropdownMenuItem(
+            child: Text('Asociaciones / Instituciones'),
+            value: 'Asociaciones_Instituciones',
+          ),
+          DropdownMenuItem(
+            child: Text('Otros'),
+            value: 'Otros',
+          ),
+        ],
+        onChanged: (value) {
+          setState(() {
+            if (value != null) {
+              tipoController.text = value;
+            }
+          });
+        },
+        value: tipoController.text.isNotEmpty ? tipoController.text : null,
+        onSaved: (_) {},
+        validator: (value) => value == null ? value = "Sin categoría" : null,
+      ));
 
   Widget buildHeader({
     required String header,
@@ -230,58 +233,81 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
         ],
       );
 
+  Widget buildAddDocumento() => buildHeader(
+      header: 'Suba algo, no se corte',
+      child: Column(
+        children: [
+          FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () async {
+                final PlatformFile? file = await pickDocumentFile();
+                setState(() {
+                  selectedFile = file;
+                });
+              }),
+          SizedBox(height: 10),
+          selectedFile != null
+              ? Text(
+                  'Archivo seleccionado: ${selectedFile!.name}',
+                  style: TextStyle(fontSize: 16),
+                )
+              : Text(
+                  'No se ha seleccionado ningún archivo',
+                  style: TextStyle(fontSize: 16),
+                ),
+        ],
+      ));
 //Publicación, aquí se guarda el objeto que contiene:
 //Titulo, tipo de documento, descripción, enlace, fecha y lugar.
 
   Future saveForm() async {
+    if (selectedFile != null) {
+        String? url = await uploadtoFirebaseFile(selectedFile!);
+        if (url != null) {
+          enlaceController.text = url;
+        }
+      }
     final isValid = _formKey.currentState!.validate();
     if (isValid) {
-      // final documento = Documento(
-      //     titulo: titleController.text,
-      //     tipoDocumentacion: tipoController.text,
-      //     descripcion: descripcionController.text.isNotEmpty
-      //         ? descripcionController.text
-      //         : null,
-      //     enlace: enlaceController.text,
-      //     idUsuario: 1,
-      //     );
-
-          Map<String, dynamic> data = {
-              'titulo': '${titleController.text}',
-              'tipoDocumentacion': '${tipoController.text}',
-              'descripcion': '${descripcionController.text.isNotEmpty
-              ? descripcionController.text
-              : null}',
-              'enlace': '${enlaceController.text}',
-              'id_usuario': LoginService.usuario.id,
-            };
+      Map<String, dynamic> data = {
+        'titulo': '${titleController.text}',
+        'tipoDocumentacion': '${tipoController.text}',
+        'descripcion':
+            '${descripcionController.text.isNotEmpty ? descripcionController.text : null}',
+        'enlace': '${enlaceController.text}',
+        'id_usuario': LoginService.usuario.id,
+      };
       final isEditing = widget.documento != null;
 
       if (isEditing) {
         // provider.editDocumento(documento, widget.documento!);
         final documento = widget.documento!;
 
-        documentoService.actualizarDocumento(documento.idDocumento!, data).then((value) {
-              SuccessPopup(title: 'Cambios realizados correctamente')
+        documentoService
+            .actualizarDocumento(documento.idDocumento!, data)
+            .then((value) {
+          SuccessPopup(title: 'Cambios realizados correctamente')
               .showSuccessPopup(context);
-              }).catchError((error) {
-              ErrorPopup(
-                title: 'Error al actualizar el documento',
-                message: 'Intentelo de nuevo más tarde.',
-              ).showErrorPopup(context);
-            });
+        }).catchError((error) {
+          ErrorPopup(
+            title: 'Error al actualizar el documento',
+            message: 'Intentelo de nuevo más tarde.',
+          ).showErrorPopup(context);
+        });
       } else {
         documentoService.crearDocumento(data).then((value) {
-                SuccessPopup(title: 'Documento creado correctamente')
-                .showSuccessPopup(context);
-              }).catchError((error) {
-                ErrorPopup(
-                    title: 'Error al crear el documento',
-                    message: 'Intentelo de nuevo más tarde.');
-                print('Error durante la creación de Incidencia $error');
-              });
+          SuccessPopup(title: 'Documento creado correctamente')
+              .showSuccessPopup(context);
+        }).catchError((error) {
+          ErrorPopup(
+              title: 'Error al crear el documento',
+              message: 'Intentelo de nuevo más tarde.');
+          print('Error durante la creación de Incidencia $error');
+        });
         // provider.addDocumento(documento);
       }
+      
+      
       setState(() {});
       navigationMenuController.updateSelectedIndex(0);
       Get.to(() => NavigationMenu());

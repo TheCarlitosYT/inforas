@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "893697249561",
+    "project_id": "inforas-8f462",
+    "storage_bucket": "inforas-8f462.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893697249561:android:43aaafdd92bb5d0837b588",
+        "android_client_info": {
+          "package_name": "com.example.inforas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3GAv_6v_Rvm5IddhG-kCjcDTPJnLkGeo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

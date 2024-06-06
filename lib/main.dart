@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inforas/providers/documentos_provider.dart';
@@ -10,8 +11,16 @@ import 'package:inforas/services/login_service.dart';
 import 'package:inforas/services/usuario_service.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+    apiKey: 'AIzaSyA3GAv_6v_Rvm5IddhG-kCjcDTPJnLkGeo',
+    appId: '1:893697249561:android:43aaafdd92bb5d0837b588',
+    messagingSenderId: '893697249561',
+    projectId: 'inforas-8f462',
+    storageBucket: 'inforas-8f462.appspot.com',
+  ));
   runApp(const AppState());
 }
 
