@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:inforas/models/evento.dart';
 import 'package:inforas/models/models.dart';
 import 'package:inforas/navigation_menu.dart';
 import 'package:inforas/providers/inforas_provider.dart';

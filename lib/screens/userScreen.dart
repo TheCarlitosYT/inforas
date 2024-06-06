@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inforas/screens/check_token_screen.dart';
 import 'package:inforas/services/login_service.dart';
 import 'package:inforas/widgets/errorPopUp.dart';
 

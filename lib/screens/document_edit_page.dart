@@ -174,7 +174,6 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
       hintStyle: TextStyle(fontSize: 15),
     ),
     items: [
-      // TODO: CHANGE Placeholder
       DropdownMenuItem(
         child: Text('CFC general'),
         value: 'CFC_General',
@@ -204,14 +203,12 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
       setState(() {
         if (value != null){
         tipoController.text = value;
-        } else {
-          tipoController.text = '' ;
         }
       });
     },
     value: tipoController.text.isNotEmpty ? tipoController.text : null,
     onSaved: (_) {},
-    validator: (value) => value!.isEmpty ? value = "Sin categoría" : null,
+    validator: (value) => value == null ? value = "Sin categoría" : null,
   ));
 
 
@@ -284,8 +281,8 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
               });
         // provider.addDocumento(documento);
       }
-      Get.to(() => const NavigationMenu(index: 0,));
       setState(() {});
+      Get.to(() => const NavigationMenu(index: 0,));
     }
   }
 }

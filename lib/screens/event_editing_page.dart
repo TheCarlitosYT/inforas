@@ -266,15 +266,13 @@ class _EventEditingPageState extends State<EventEditingPage> {
           setState(() {
             if (value != null) {
               formatoController.text = value;
-            } else {
-              formatoController.text = '';
             }
           });
         },
         value:
             formatoController.text.isNotEmpty ? formatoController.text : null,
         onSaved: (_) {},
-        validator: (value) => value!.isEmpty ? value = "Sin categoría" : null,
+        validator: (value) => value == null ? value = "No se ha especificado el evento" : null,
       ));
   Widget buildDatePickers() => Column(
         children: [
@@ -439,8 +437,8 @@ class _EventEditingPageState extends State<EventEditingPage> {
                 print('Error durante la creación de Incidencia $error');
               });
       }
-      Get.to(() => const NavigationMenu(index: 1,));
       setState(() {});
+      Get.to(() => const NavigationMenu(index: 1,));
     }
   }
 }

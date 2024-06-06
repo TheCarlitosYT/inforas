@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:inforas/models/evento.dart';
-import 'package:inforas/navigation_menu.dart';
 import 'package:inforas/screens/screens.dart';
 import 'package:inforas/services/evento_service.dart';
 import 'package:intl/intl.dart';
@@ -164,6 +162,20 @@ class EventViewingPage extends StatelessWidget {
         ),
         Text(
           evento.tipoEvento,
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+        SizedBox(height: 14),
+        Text(
+          'Formato de evento',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          evento.formatoEvento,
           style: TextStyle(
             fontSize: 16,
           ),

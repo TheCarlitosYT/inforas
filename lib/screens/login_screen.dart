@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
-import 'package:inforas/models/models.dart';
 import 'package:inforas/navigation_menu.dart';
 import 'package:inforas/providers/secure_storage.dart';
 import 'package:inforas/services/login_service.dart';
