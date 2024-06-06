@@ -30,7 +30,7 @@ class CheckTokenScreen extends StatelessWidget {
               });
             } else {
               Future.microtask(() {
-                Get.to(() => const NavigationMenu(index: 0,));
+                // NavigationMenuController.selectedIndex.value = 0;
               });
             }
             return Container();

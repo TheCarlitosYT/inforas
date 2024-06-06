@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:inforas/models/evento.dart';
+import 'package:inforas/navigation_menu.dart';
 import 'package:inforas/screens/screens.dart';
 import 'package:inforas/services/evento_service.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +14,7 @@ class EventViewingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     EventoService eventoService = new EventoService();
+    NavigationMenuController navigationMenuController = Get.put(NavigationMenuController());
 
     return Scaffold(
       appBar: AppBar(
@@ -20,7 +23,7 @@ class EventViewingPage extends StatelessWidget {
           color:
               const Color.fromARGB(255, 255, 255, 255), //change your color here
         ),
-        actions: buildViewingActions(context, evento, eventoService),
+        actions: buildViewingActions(context, evento, eventoService, navigationMenuController),
         title: const Text("Información del evento"),
         titleTextStyle: TextStyle(
           fontSize: 18,
@@ -78,7 +81,7 @@ class EventViewingPage extends StatelessWidget {
     );
   }
 
-  List<Widget> buildViewingActions(BuildContext context, Evento evento, EventoService eventoService) {
+  List<Widget> buildViewingActions(BuildContext context, Evento evento, EventoService eventoService, NavigationMenuController navigationMenuController) {
     return [
       IconButton(
         icon: Icon(Icons.edit),
@@ -108,7 +111,9 @@ class EventViewingPage extends StatelessWidget {
                         TextButton(
                           onPressed: () {
                             _eliminarDocumento(evento, eventoService);
-                            Navigator.of(context).pop(true);
+                            Get.to(() => NavigationMenu());
+                            navigationMenuController.updateSelectedIndex(1);
+                  
                           },
                           child: Text('Eliminar'),
                         ),

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:inforas/navigation_menu.dart';
 import 'package:inforas/providers/secure_storage.dart';
 import 'package:inforas/services/login_service.dart';
@@ -73,6 +74,7 @@ class _LogInFormState extends State<LogInForm> {
 
   @override
   Widget build(BuildContext context) {
+    NavigationMenuController navigationMenuController = Get.put(NavigationMenuController());
     return Form(
         key: _formKey,
         autovalidateMode: AutovalidateMode.disabled,
@@ -131,14 +133,14 @@ class _LogInFormState extends State<LogInForm> {
                 maintainAnimation: true,
                 maintainState: true,
                 child: _ForgottenPopUp()),
-            _SignInButton(),
+            _SignInButton(navigationMenuController),
             SizedBox(height: 20),
           ],
         ),
       );
   }
 
-  MaterialButton _SignInButton() {
+  MaterialButton _SignInButton(NavigationMenuController navigationMenuController) {
     return MaterialButton(
       // onPressed: () => {
       //   Get.to(() => const NavigationMenu()),
@@ -151,7 +153,8 @@ class _LogInFormState extends State<LogInForm> {
           };
           loginService.login(data).then((value) {
             print('El usuario existe');
-            Get.to(() => const NavigationMenu(index: 0,));
+            navigationMenuController.updateSelectedIndex(0);
+            Get.to(() => NavigationMenu());
             // Navigator.pushNamed(context, '/home');
           })
           .catchError((error) {

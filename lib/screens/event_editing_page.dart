@@ -28,6 +28,7 @@ class EventEditingPage extends StatefulWidget {
 
 class _EventEditingPageState extends State<EventEditingPage> {
   EventoService eventoService = EventoService();
+  NavigationMenuController navigationMenuController = Get.put(NavigationMenuController());
 
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
@@ -379,24 +380,13 @@ class _EventEditingPageState extends State<EventEditingPage> {
   Future saveForm() async {
     final isValid = _formKey.currentState!.validate();
     if (isValid) {
-      // final evento = Evento(
-      //   titulo: titleController.text,
-      //   tipoEvento: tipoController.text,
-      //   formatoEvento: formatoController.text,
-      //   descripcion: descripcionController.text.isNotEmpty
-      //       ? descripcionController.text
-      //       : null,
-      //   enlace: enlaceController.text.isNotEmpty ? enlaceController.text : null,
-      //   fecha: fechaHoraEvento,
-      //   lugar: lugarController.text,
-      //   idUsuario: 1,
-      // );
-
-      Map<String, dynamic> newData = {
+      final isEditing = widget.evento != null;
+      if (isEditing) {
+        Map<String, dynamic> newData = {
         'titulo': '${titleController.text}',
-        'descripcion': descripcionController.text.isNotEmpty
+        'descripcion': '${descripcionController.text.isNotEmpty
             ? descripcionController.text
-            : null,
+            : null}',
         'tipoEvento': '${tipoController.text}',
         'formatoEvento': '${formatoController.text}',
         'fecha': fechaHoraEvento.toIso8601String(),
@@ -405,14 +395,8 @@ class _EventEditingPageState extends State<EventEditingPage> {
             enlaceController.text.isNotEmpty ? enlaceController.text : null,
         'id_usuario': LoginService.usuario.id,
       };
-      //Pensando como hacerlo, ya que en el caso de eventos, tanto el enlace como el lugar pueden ser opcionales.
-      final isEditing = widget.evento != null;
-
-      // final provider = Provider.of<EventsProvider>(context, listen: false);
-
-      if (isEditing) {
         // provider.editEvento(evento, widget.evento!);
-
+        print(fechaHoraEvento);
         // Navigator.of(context).pop();
         final evento = widget.evento!;
 
@@ -427,6 +411,19 @@ class _EventEditingPageState extends State<EventEditingPage> {
             });
 
       } else {
+        Map<String, dynamic> newData = {
+        'titulo': '${titleController.text}',
+        'descripcion': '${descripcionController.text.isNotEmpty
+            ? descripcionController.text
+            : null}',
+        'tipoEvento': '${tipoController.text}',
+        'formatoEvento': '${formatoController.text}',
+        'fecha': fechaHoraEvento,
+        'lugar': '${lugarController.text}',
+        'enlace':
+            enlaceController.text.isNotEmpty ? enlaceController.text : null,
+        'id_usuario': LoginService.usuario.id,
+      };
         eventoService.crearEvento(newData).then((value) {
                 SuccessPopup(title: 'Documento creado correctamente')
                 .showSuccessPopup(context);
@@ -437,8 +434,8 @@ class _EventEditingPageState extends State<EventEditingPage> {
                 print('Error durante la creación de Incidencia $error');
               });
       }
-      setState(() {});
-      Get.to(() => const NavigationMenu(index: 1,));
+      navigationMenuController.updateSelectedIndex(1);
+      Get.to(() => NavigationMenu());
     }
   }
 }

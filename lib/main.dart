@@ -5,6 +5,7 @@ import 'package:inforas/providers/documentos_provider.dart';
 import 'package:inforas/providers/events_provider.dart';
 import 'package:inforas/routes/routes.dart';
 import 'package:inforas/services/documento_service.dart';
+import 'package:inforas/services/evento_service.dart';
 import 'package:inforas/services/login_service.dart';
 import 'package:inforas/services/usuario_service.dart';
 import 'package:provider/provider.dart';
@@ -26,8 +27,8 @@ class AppState extends StatelessWidget {
         // ChangeNotifierProvider(create: (_) => FavoritoService(), lazy: false),
         // ChangeNotifierProvider(create: (_) => IncidenciaService(), lazy: false),
         // ChangeNotifierProvider(create: (_) => LoginService(), lazy: false),
-
-        // ChangeNotifierProvider(create: (context) => UsuarioService(), lazy: false,),
+        ChangeNotifierProvider(create: (_) => EventoService(), lazy: false),
+        ChangeNotifierProvider(create: (_) => UsuarioService(), lazy: false,),
         ChangeNotifierProvider(create: (_) => DocumentoService(), lazy: false),
         ChangeNotifierProvider(create: (_) => EventsProvider(), lazy: false),
         ChangeNotifierProvider(create: (_) => DocumentsProvider(), lazy: false),

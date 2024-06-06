@@ -92,11 +92,11 @@ Future<void> actualizarDocumento(int documentoId, Map<String, dynamic> data) asy
 
 
   Future<void> deleteDocumento(int documentoId) async {
+
     final response =
         await InforasProvider.deleteData('/documentos/$documentoId');
     print(response);
     listaDocumentos.removeWhere((documento) => documento.idDocumento == documentoId);
-    Get.to (() => const NavigationMenu());
     notifyListeners();
   }
 }

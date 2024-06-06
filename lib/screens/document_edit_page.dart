@@ -25,6 +25,7 @@ class DocumentEditingPage extends StatefulWidget {
 
 class _DocumentEditingPageState extends State<DocumentEditingPage> {
   DocumentoService documentoService = new DocumentoService();
+  NavigationMenuController navigationMenuController = Get.put(NavigationMenuController());
 
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
@@ -282,7 +283,8 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
         // provider.addDocumento(documento);
       }
       setState(() {});
-      Get.to(() => const NavigationMenu(index: 0,));
+      navigationMenuController.updateSelectedIndex(0);
+      Get.to(() => NavigationMenu());
     }
   }
 }

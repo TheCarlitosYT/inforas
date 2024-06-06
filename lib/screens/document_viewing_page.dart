@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:inforas/models/documento.dart';
+import 'package:inforas/navigation_menu.dart';
 import 'package:inforas/screens/document_edit_page.dart';
 import 'package:inforas/services/documento_service.dart';
 
@@ -11,6 +13,7 @@ class DocumentViewingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     NavigationMenuController navigationMenuController = Get.put(NavigationMenuController());
     DocumentoService documentoService = new DocumentoService();
     return Scaffold(
       appBar: AppBar(
@@ -19,7 +22,7 @@ class DocumentViewingPage extends StatelessWidget {
           color:
               const Color.fromARGB(255, 255, 255, 255), //change your color here
         ),
-        actions: buildViewingActions(context, documento, documentoService),
+        actions: buildViewingActions(context, documento, documentoService, navigationMenuController),
         title: const Text("Vista del documento"),
         titleTextStyle: TextStyle(
           fontSize: 18,
@@ -43,7 +46,7 @@ class DocumentViewingPage extends StatelessWidget {
   }
 
 
-  List<Widget> buildViewingActions(BuildContext context, Documento documento, DocumentoService documentoService) {
+  List<Widget> buildViewingActions(BuildContext context, Documento documento, DocumentoService documentoService, NavigationMenuController navigationMenuController) {
     return [
       IconButton(
         icon: Icon(Icons.edit),
@@ -73,7 +76,8 @@ class DocumentViewingPage extends StatelessWidget {
                         TextButton(
                           onPressed: () {
                             _eliminarDocumento(documento, documentoService);
-                            Navigator.of(context).pop(true);
+                            navigationMenuController.updateSelectedIndex(0);
+                            Get.to(() => NavigationMenu());
                           },
                           child: Text('Eliminar'),
                         ),

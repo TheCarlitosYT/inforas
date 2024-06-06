@@ -100,7 +100,6 @@ Future<void> actualizarEvento(int eventoId, Map<String, dynamic> data) async {
         await InforasProvider.deleteData('/eventos/$eventoId');
     print(response);
     listaEventos.removeWhere((evento) => evento.idEventos == eventoId);
-    Get.to (() => const NavigationMenu());
     notifyListeners();
   }
 }
