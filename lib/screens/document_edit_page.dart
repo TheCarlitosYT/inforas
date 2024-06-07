@@ -85,8 +85,8 @@ class _DocumentEditingPageState extends State<DocumentEditingPage> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 buildTitle(),
-                SizedBox(height: 12),
-                buildEnlace(),
+                // SizedBox(height: 12),
+                // buildEnlace(),
                 SizedBox(height: 12),
                 buildTipoDocumento(),
                 SizedBox(height: 12),

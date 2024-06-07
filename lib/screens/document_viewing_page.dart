@@ -4,6 +4,7 @@ import 'package:inforas/models/documento.dart';
 import 'package:inforas/navigation_menu.dart';
 import 'package:inforas/screens/document_edit_page.dart';
 import 'package:inforas/services/documento_service.dart';
+import 'package:inforas/widgets/addDocuments.dart';
 
 class DocumentViewingPage extends StatelessWidget {
   final Documento documento;
@@ -96,17 +97,22 @@ class DocumentViewingPage extends StatelessWidget {
       children: [
         SizedBox(height: 14),
         Text(
-          'Enlace del documento',
+          'Haga click en el botón para abrir el documento',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
         ),
-        Text(
-          documento.enlace != null ? documento.enlace! : "No se ha establecido ningún enlace referente a este documento",
-          style: TextStyle(
-            fontSize: 16,
-          ),
+        // Text(
+        //   documento.enlace != null ? documento.enlace! : "No se ha establecido ningún enlace referente a este documento",
+        //   style: TextStyle(
+        //     fontSize: 16,
+        //   ),
+        // ),
+        FloatingActionButton(
+          child: Text('Abrir'),
+          onPressed: () => openFileString(documento.enlace),
+        
         ),
         SizedBox(height: 14),
         Text(
