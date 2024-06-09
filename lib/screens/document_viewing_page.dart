@@ -103,7 +103,7 @@ class DocumentViewingPage extends StatelessWidget {
           ),
         ),
         Text(
-          documento.enlace != null ? documento.enlace! : "No se ha establecido ningún enlace referente a este documento",
+          documento.enlace,
           style: TextStyle(
             fontSize: 16,
           ),
