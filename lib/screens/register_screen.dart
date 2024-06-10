@@ -68,36 +68,36 @@ class _RegisterFormState extends State<RegisterForm> {
   final nameValidator = MultiValidator([
     RequiredValidator(
         errorText:
-            'Required_acc_name_error'), 
+            'El nombre es obligatorio.'), 
     MaxLengthValidator(30,
-        errorText: 'Very_long_acc_name_error') 
+        errorText: 'El nombre es demasiado largo') 
   ]);
 
   final surnameValidator = MultiValidator([
     RequiredValidator(
         errorText:
-             "Required_acc_surname_error"),
+             "El apellido es obligatorio."),
     MaxLengthValidator(50,
-        errorText: 'Very_long_acc_surname_error') 
+        errorText: 'El nombre es demasiado largo') 
   ]);
 
   final emailValidator = MultiValidator([
     RequiredValidator(
         errorText:
-            'Required_mail_error'),
+            'Email obligatorio.'),
     EmailValidator(
-        errorText: 'Invalid_mail_error') 
+        errorText: 'El formato del email no es correcto.'), 
   ]);
 
   final passwordValidator = MultiValidator([
     RequiredValidator(
         errorText:
-            'Required_password_error'),
+            'Contraseña obligatoria.'),
     MinLengthValidator(6,
-        errorText: 'Very_Short_password_error'), 
+        errorText: 'Contraseña demasiado corta.'), 
     PatternValidator(r'^(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$',
         errorText:
-             'Invalid_Password_Format_error'), 
+             'Formato de contraseña inválido (Debe contener al menos un número y un caracter especial)'), 
   ]);
 
   @override
@@ -247,7 +247,7 @@ class _RegisterFormState extends State<RegisterForm> {
           print('Contraseñas hacen Match');
           usuarioService.registerClient(data).then((value) {
             print('Usuario creado correctamente');
-            SuccessPopup(title: 'Account_Created_Successfully_Text') //Cuenta creada con exito
+            SuccessPopup(title: 'Se ha creado la cuenta correctamente')
                 .showSuccessPopup(context);
             Navigator.pushNamed(context, '/login');
           }).catchError((error) {

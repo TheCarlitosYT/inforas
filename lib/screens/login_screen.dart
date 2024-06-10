@@ -64,12 +64,12 @@ class _LogInFormState extends State<LogInForm> {
   bool _loginError = false;
 
   final emailValidator = MultiValidator([
-    RequiredValidator(errorText: 'Required_mail_error'),
-    EmailValidator(errorText: 'Invalid_mail_error')
+    RequiredValidator(errorText: 'El Email es obligatorio'),
+    EmailValidator(errorText: 'El formato del email es incorrecto'),
   ]);
 
   final passwordValidator = MultiValidator([
-    RequiredValidator(errorText: 'Required_password_error'),
+    RequiredValidator(errorText: 'La contraseña es obligatoria'),
   ]);
 
   @override

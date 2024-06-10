@@ -46,9 +46,12 @@ class UserScreen extends StatelessWidget {
         ),
         SizedBox(height: 20),
         Text(
-          '¡Bienvenido/a! User',
+          '¡Bienvenido/a! ${LoginService.usuario.nombre}',
           style: TextStyle(fontSize: 18),
         ),
+        Text(
+          'Su email: ${LoginService.usuario.username}',
+        )
       ],
     );
   }
