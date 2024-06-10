@@ -386,13 +386,13 @@ class _EventEditingPageState extends State<EventEditingPage> {
         'titulo': '${titleController.text}',
         'descripcion': '${descripcionController.text.isNotEmpty
             ? descripcionController.text
-            : null}',
+            : "Sin descripcion"}',
         'tipoEvento': '${tipoController.text}',
         'formatoEvento': '${formatoController.text}',
         'fecha': fechaHoraEvento.toIso8601String(),
         'lugar': '${lugarController.text}',
         'enlace':
-            enlaceController.text.isNotEmpty ? enlaceController.text : null,
+            '${enlaceController.text.isNotEmpty ? enlaceController.text : "Sin enlace"}',
         'id_usuario': LoginService.usuario.id,
       };
         // provider.editEvento(evento, widget.evento!);
@@ -415,13 +415,13 @@ class _EventEditingPageState extends State<EventEditingPage> {
         'titulo': '${titleController.text}',
         'descripcion': '${descripcionController.text.isNotEmpty
             ? descripcionController.text
-            : null}',
+            : "Sin descripcion"}',
         'tipoEvento': '${tipoController.text}',
         'formatoEvento': '${formatoController.text}',
         'fecha': fechaHoraEvento,
         'lugar': '${lugarController.text}',
         'enlace':
-            enlaceController.text.isNotEmpty ? enlaceController.text : null,
+            '${enlaceController.text.isNotEmpty ? enlaceController.text : "Sin enlace"}',
         'id_usuario': LoginService.usuario.id,
       };
         eventoService.crearEvento(newData).then((value) {

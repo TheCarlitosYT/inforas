@@ -26,7 +26,7 @@ class UserScreen extends StatelessWidget {
           SizedBox(height: 50),
           userInfo(),
           Expanded(child: Container()), 
-          settingsButton(context),
+          // settingsButton(context),
           SizedBox(height: 20),
           logOutButton(CheckTokenScreen ,context),
         ],
@@ -56,27 +56,27 @@ class UserScreen extends StatelessWidget {
     );
   }
 
-  Widget settingsButton(context) {
-    return SizedBox(
-      width: double.infinity, // Ancho máximo
-      height: 50,
-      child: ElevatedButton(
-        onPressed: () {
-          ErrorPopup(
-            title: 'De momento no hay nada', 
-            message: 'Intentelo de nuevo en futuras versiones'
-            ).showErrorPopup(context);
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.blue,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(0),
-          ),
-        ),
-        child: Text('Settings', style: TextStyle(color: Colors.white)),
-      ),
-    );
-  }
+  // Widget settingsButton(context) {
+  //   return SizedBox(
+  //     width: double.infinity, // Ancho máximo
+  //     height: 50,
+  //     child: ElevatedButton(
+  //       onPressed: () {
+  //         ErrorPopup(
+  //           title: 'De momento no hay nada', 
+  //           message: 'Intentelo de nuevo en futuras versiones'
+  //           ).showErrorPopup(context);
+  //       },
+  //       style: ElevatedButton.styleFrom(
+  //         backgroundColor: Colors.blue,
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.circular(0),
+  //         ),
+  //       ),
+  //       child: Text('Settings', style: TextStyle(color: Colors.white)),
+  //     ),
+  //   );
+  // }
 
   Widget logOutButton(LoginService checkTokenService, BuildContext context) {
     return SizedBox(
